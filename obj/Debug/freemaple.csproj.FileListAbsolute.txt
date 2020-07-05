@@ -1,0 +1,12 @@
+D:\github\simplemaple\program\freemaple\freemaple\bin\Debug\freemaple.exe.config
+D:\github\simplemaple\program\freemaple\freemaple\bin\Debug\freemaple.exe
+D:\github\simplemaple\program\freemaple\freemaple\bin\Debug\freemaple.pdb
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.Form1.resources
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.Properties.Resources.resources
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.csproj.GenerateResource.cache
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.csproj.CoreCompileInputs.cache
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.exe
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.pdb
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.MainForm.resources
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.ServiceForm.resources
+D:\github\simplemaple\program\freemaple\freemaple\obj\Debug\freemaple.服务列表.resources

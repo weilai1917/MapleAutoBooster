@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Milai.MapleAutoBooster", "Milai.MapleAutoBooster.csproj", "{0DBF7801-C22D-4F04-8004-C0D2C0B06DE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0DBF7801-C22D-4F04-8004-C0D2C0B06DE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DBF7801-C22D-4F04-8004-C0D2C0B06DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DBF7801-C22D-4F04-8004-C0D2C0B06DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DBF7801-C22D-4F04-8004-C0D2C0B06DE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8DDB2B0D-0046-477A-B337-A1CC0AAAF891}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,13 @@
+D:\github\simplemaple\program\MapleAutoBooster\bin\Debug\MapleAutoBooster.exe.config
+D:\github\simplemaple\program\MapleAutoBooster\bin\Debug\MapleAutoBooster.exe
+D:\github\simplemaple\program\MapleAutoBooster\bin\Debug\MapleAutoBooster.pdb
+D:\github\simplemaple\program\MapleAutoBooster\bin\Debug\Newtonsoft.Json.dll
+D:\github\simplemaple\program\MapleAutoBooster\bin\Debug\Newtonsoft.Json.xml
+D:\github\simplemaple\program\MapleAutoBooster\obj\Debug\MapleAutoBooster.MainForm.resources
+D:\github\simplemaple\program\MapleAutoBooster\obj\Debug\MapleAutoBooster.Properties.Resources.resources
+D:\github\simplemaple\program\MapleAutoBooster\obj\Debug\MapleAutoBooster.ServiceForm.resources
+D:\github\simplemaple\program\MapleAutoBooster\obj\Debug\Milai.MapleAutoBooster.csproj.GenerateResource.cache
+D:\github\simplemaple\program\MapleAutoBooster\obj\Debug\Milai.MapleAutoBooster.csproj.CoreCompileInputs.cache
+D:\github\simplemaple\program\MapleAutoBooster\obj\Debug\Milai.MapleAutoBooster.csproj.CopyComplete
+D:\github\simplemaple\program\MapleAutoBooster\obj\Debug\MapleAutoBooster.exe
+D:\github\simplemaple\program\MapleAutoBooster\obj\Debug\MapleAutoBooster.pdb
