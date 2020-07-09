@@ -71,7 +71,7 @@ namespace MapleAutoBooster
         public void RecordKeyUpAction(object sender, KeyEventArgs e)
         {
             RecordStopWatch.Stop();
-            RecordList.Add(new RecordKeyData(e.KeyData, 0, 0));
+            RecordList.Add(new RecordKeyData(e.KeyData, 1, 0));
             if (RecordList.Count > 1)
                 RecordList[RecordList.Count - 1].Wait = RecordStopWatch.ElapsedMilliseconds;
             RecordStopWatch.Restart();

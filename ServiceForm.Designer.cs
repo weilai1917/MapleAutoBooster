@@ -118,7 +118,7 @@
             this.ServicePanel.Location = new System.Drawing.Point(0, 95);
             this.ServicePanel.Name = "ServicePanel";
             this.ServicePanel.SelectedIndex = 0;
-            this.ServicePanel.Size = new System.Drawing.Size(349, 497);
+            this.ServicePanel.Size = new System.Drawing.Size(349, 378);
             this.ServicePanel.TabIndex = 13;
             // 
             // ServiceBeforeLayout
@@ -181,7 +181,7 @@
             this.ServiceAfterLayout.Location = new System.Drawing.Point(4, 26);
             this.ServiceAfterLayout.Name = "ServiceAfterLayout";
             this.ServiceAfterLayout.Padding = new System.Windows.Forms.Padding(3);
-            this.ServiceAfterLayout.Size = new System.Drawing.Size(341, 467);
+            this.ServiceAfterLayout.Size = new System.Drawing.Size(341, 348);
             this.ServiceAfterLayout.TabIndex = 2;
             this.ServiceAfterLayout.Text = "执行策略后执行";
             // 
@@ -193,7 +193,7 @@
             this.ServiceDo2.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServiceDo2.Location = new System.Drawing.Point(3, 3);
             this.ServiceDo2.Name = "ServiceDo2";
-            this.ServiceDo2.Size = new System.Drawing.Size(333, 459);
+            this.ServiceDo2.Size = new System.Drawing.Size(333, 340);
             this.ServiceDo2.TabIndex = 2;
             this.ServiceDo2.Tag = "2";
             this.ServiceDo2.Text = "";
@@ -227,7 +227,7 @@
             // 
             this.ControlLayout.Controls.Add(this.BtnSave);
             this.ControlLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ControlLayout.Location = new System.Drawing.Point(0, 592);
+            this.ControlLayout.Location = new System.Drawing.Point(0, 473);
             this.ControlLayout.Name = "ControlLayout";
             this.ControlLayout.Size = new System.Drawing.Size(349, 50);
             this.ControlLayout.TabIndex = 15;
@@ -237,7 +237,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(349, 642);
+            this.ClientSize = new System.Drawing.Size(349, 523);
             this.Controls.Add(this.ServicePanel);
             this.Controls.Add(this.TopLayout);
             this.Controls.Add(this.ControlLayout);
