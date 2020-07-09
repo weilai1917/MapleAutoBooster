@@ -132,6 +132,8 @@ namespace MapleAutoBooster
 
         private void ServiceDo_Leave(object sender, EventArgs e)
         {
+            return;
+
             var ServiceDoBox = (Control)sender;
             var ServiceTarget = Convert.ToString(ServiceDoBox.Tag);
             var ServiceText = ServiceDoBox.Text;

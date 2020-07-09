@@ -23,3 +23,4 @@ D:\project\github\autobooster\bin\Debug\Newtonsoft.Json.xml
 D:\project\github\autobooster\obj\Debug\Milai.MapleAutoBooster.csproj.CopyComplete
 D:\project\github\autobooster\obj\Debug\MapleAutoBooster.exe
 D:\project\github\autobooster\obj\Debug\MapleAutoBooster.pdb
+D:\project\github\autobooster\obj\Debug\Milai.MapleAutoBooster.csprojAssemblyReference.cache

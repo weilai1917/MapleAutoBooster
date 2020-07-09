@@ -86,17 +86,9 @@ namespace MapleAutoBooster.Service
         private IntPtr MapleWindow = IntPtr.Zero;
 
         [ServiceMethod]
-        [Description("等待{2}毫秒,{1}键{0}")]
+        [Description("{1}键{0}，{2}毫秒")]
         public void PressKey(string keyTemp, string keyAction, string keyTime)
         {
-            var waitTime = Convert.ToInt32(keyTime);
-            if (waitTime < 0)
-            {
-                Random t = new Random();
-                waitTime = t.Next(50, 100);
-            }
-            Thread.Sleep(waitTime);
-
             Keys key = (Keys)Enum.Parse(typeof(Keys), keyTemp);
 
             if (key == Keys.Left || key == Keys.Right || key == Keys.Up || key == Keys.Down)
@@ -110,6 +102,14 @@ namespace MapleAutoBooster.Service
                 var action = this.GetKeyAction(keyAction);
                 PostMessage(MapleWindow, action, (int)key, MakeKeyLparam((int)key, action));
             }
+
+            var waitTime = Convert.ToInt32(keyTime);
+            if (waitTime < 0)
+            {
+                Random t = new Random();
+                waitTime = t.Next(50, 100);
+            }
+            Thread.Sleep(waitTime);
         }
 
         public string PressRandomKey(string wait)

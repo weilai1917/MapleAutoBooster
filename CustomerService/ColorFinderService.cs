@@ -21,7 +21,7 @@ namespace MapleAutoBooster.Service
         private Point StartPoint;
         private Color FindColor;
 
-        #region 内核方法
+        #region WIN
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
@@ -32,7 +32,7 @@ namespace MapleAutoBooster.Service
         }
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect); 
+        static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
         #endregion
 
         public override List<Tuple<string, string>> SetDefaultOperations()
@@ -47,26 +47,20 @@ namespace MapleAutoBooster.Service
 
         [ServiceMethod]
         [Description("查找目标颜色是：{0}.{1}.{2}")]
-        public void SetColor(string colorTxt)
+        public void SetColor(string r, string g, string b)
         {
-            string[] rgb = colorTxt.Split(',');
-            if (rgb.Length < 3)
-                throw new Exception("无法识别的颜色");
-            FindColor = Color.FromArgb(Convert.ToInt32(rgb[0]), Convert.ToInt32(rgb[1]), Convert.ToInt32(rgb[2]));
+            FindColor = Color.FromArgb(Convert.ToInt32(r), Convert.ToInt32(g), Convert.ToInt32(b));
         }
 
         [ServiceMethod]
         [Description("查找区域范围是：[{0},{1}]")]
-        public void SetFinderRec(string recTxt)
+        public void SetFinderRec(string w, string h)
         {
-            string[] rec = recTxt.Split(',');
-            if (rec.Length < 2)
-                throw new Exception("无法识别的矩形");
-            FinderRec = new Rectangle(0, 0, Convert.ToInt32(rec[0]), Convert.ToInt32(rec[1]));
+            FinderRec = new Rectangle(0, 0, Convert.ToInt32(w), Convert.ToInt32(h));
         }
 
         [ServiceMethod]
-        [Description("查找区域起点是：[{0},{1}]")]
+        [Description("查找区域起点是：[]")]
         public void SetMapleStartPoint()
         {
             RECT rect = new RECT();

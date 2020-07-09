@@ -14,7 +14,7 @@ namespace MapleAutoBooster
     public partial class MainForm
     {
         private GlobalKeyboardHook HookKey;
-        private List<Tuple<Keys, int, long>> RecordList;
+        private List<RecordKeyData> RecordList;
         private Stopwatch RecordStopWatch = new Stopwatch();
 
         private void BtnRecordKey_Click(object sender, EventArgs e)
@@ -24,7 +24,7 @@ namespace MapleAutoBooster
                 HookKey = new GlobalKeyboardHook();
                 HookKey.KeyDown += RecordKeyDownAction;
                 HookKey.KeyUp += RecordKeyUpAction;
-                RecordList = new List<Tuple<Keys, int, long>>();
+                RecordList = new List<RecordKeyData>();
                 RecordStopWatch.Start();
                 this.BtnRecordKey.Tag = true;
                 this.BtnRecordKey.Text = "停止录制";
@@ -44,7 +44,7 @@ namespace MapleAutoBooster
                 opObject.Operations = new List<IOperation>();
                 foreach (var item in RecordList)
                 {
-                    opObject.Operations.Add(new Operation($"PressKey[{item.Item1},{item.Item2},{item.Item3.ToString()}]"));
+                    opObject.Operations.Add(new Operation($"PressKey[{item.Key},{item.Action},{item.Wait}]"));
                 }
                 config.Operations = JsonConvert.SerializeObject(new List<OperateObject>() { opObject });
                 this.MapleConfig.ServiceData.Add(config);
@@ -62,15 +62,33 @@ namespace MapleAutoBooster
         public void RecordKeyDownAction(object sender, KeyEventArgs e)
         {
             RecordStopWatch.Stop();
-            RecordList.Add(new Tuple<Keys, int, long>(e.KeyData, 0, RecordList.Count == 0 ? 0 : RecordStopWatch.ElapsedMilliseconds));
+            RecordList.Add(new RecordKeyData(e.KeyData, 0, 0));
+            if (RecordList.Count > 1)
+                RecordList[RecordList.Count - 1].Wait = RecordStopWatch.ElapsedMilliseconds;
             RecordStopWatch.Restart();
         }
 
         public void RecordKeyUpAction(object sender, KeyEventArgs e)
         {
             RecordStopWatch.Stop();
-            RecordList.Add(new Tuple<Keys, int, long>(e.KeyData, 1, RecordList.Count == 0 ? 0 : RecordStopWatch.ElapsedMilliseconds));
+            RecordList.Add(new RecordKeyData(e.KeyData, 0, 0));
+            if (RecordList.Count > 1)
+                RecordList[RecordList.Count - 1].Wait = RecordStopWatch.ElapsedMilliseconds;
             RecordStopWatch.Restart();
+        }
+    }
+
+    public class RecordKeyData
+    {
+        public Keys Key { get; set; }
+        public int Action { get; set; }
+        public long Wait { get; set; }
+
+        public RecordKeyData(Keys key, int action, long wait)
+        {
+            this.Key = key;
+            this.Action = action;
+            this.Wait = wait;
         }
     }
 }
