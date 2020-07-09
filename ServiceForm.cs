@@ -1,9 +1,12 @@
 ﻿using MapleAutoBooster.Abstract;
+using MapleAutoBooster.ServiceAttribute;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -14,18 +17,18 @@ namespace MapleAutoBooster
         private MapleConfig MapleConfig;
         private List<CustomBindValue> ServiceTypeList;
         private List<CustomBindValue> ServicePolicyList;
-        private AbstractService Service;
+        private AbstractBoosterService BoosterService;
 
-        public ServiceForm(AbstractService service = null, MapleConfig config = null)
+        public ServiceForm(AbstractBoosterService service = null, MapleConfig config = null)
         {
             this.MapleConfig = config;
             InitializeComponent();
             BindControlValue();
 
-            this.Service = service;
+            this.BoosterService = service;
             if (service == null)
             {
-                Service = this.Service ?? (AbstractService)Activator.CreateInstance(Type.GetType($"MapleAutoBooster.Service.{this.ServiceType.SelectedValue}"));
+                BoosterService = this.BoosterService ?? (AbstractBoosterService)Activator.CreateInstance(Type.GetType(this.ServiceType.SelectedValue.ToString()));
                 this.BindDefaultSelectValue();
             }
             this.BindSelectVale();
@@ -35,17 +38,15 @@ namespace MapleAutoBooster
         {
             try
             {
-                this.Service.SaveValidation();
-                if (this.MapleConfig.ServiceData == null)
-                    this.MapleConfig.ServiceData = new List<ServiceConfig>();
+                this.BoosterService.SaveValidation();
                 var serviceConfig = new ServiceConfig()
                 {
-                    Guid = this.Service.Id ?? Guid.NewGuid().ToString(),
-                    ServiceTypeId = this.Service.ServiceTypeId,
-                    ServicePolicy = this.Service.ServicePolicy,
-                    ServiceName = this.Service.ServiceName,
-                    ServiceDescription = this.Service.ServiceDescription,
-                    Operations = JsonConvert.SerializeObject(this.Service.Operations.ToList())
+                    Guid = this.BoosterService.Id ?? Guid.NewGuid().ToString(),
+                    ServiceTypeId = this.BoosterService.ServiceTypeId,
+                    ServicePolicy = this.BoosterService.ServicePolicy,
+                    ServiceName = this.BoosterService.ServiceName,
+                    ServiceDescription = this.BoosterService.ServiceDescription,
+                    Operations = JsonConvert.SerializeObject(this.BoosterService.Operations.ToList())
                 };
                 this.MapleConfig.ServiceData.RemoveAll(x => x.Guid == serviceConfig.Guid);
                 this.MapleConfig.ServiceData.Add(serviceConfig);
@@ -63,8 +64,21 @@ namespace MapleAutoBooster
         {
             //服务类型
             ServiceTypeList = new List<CustomBindValue>();
-            ServiceTypeList.Add(new CustomBindValue { Key = "ColorFinderService", Value = "矩形范围内找色" });
-            ServiceTypeList.Add(new CustomBindValue { Key = "AutoKeyService", Value = "自动按键" });
+            var allService = Assembly.Load(this.GetType().Namespace).GetTypes().Where(x =>
+               typeof(AbstractBoosterService).IsAssignableFrom(x) &&
+                x.GetCustomAttribute(typeof(ServiceTypeAttribute), false) != null);
+
+            if (allService != null && allService.Count() > 0)
+            {
+                foreach (var item in allService)
+                {
+                    ServiceTypeList.Add(new CustomBindValue
+                    {
+                        Key = item.FullName,
+                        Value = ((DescriptionAttribute)item.GetCustomAttribute(typeof(DescriptionAttribute))).Description
+                    });
+                }
+            }
             ServiceType.ValueMember = "Key";
             ServiceType.DisplayMember = "Value";
             ServiceType.DataSource = this.ServiceTypeList;
@@ -80,17 +94,16 @@ namespace MapleAutoBooster
 
         private void BindDefaultSelectValue()
         {
-            Service.ServiceTypeId = this.ServiceTypeList.First().Key;
-            Service.ServiceName = this.ServiceTypeList.First().Value;
+            BoosterService.ServiceTypeId = this.ServiceTypeList.First().Key;
+            BoosterService.ServiceName = this.ServiceTypeList.First().Value;
         }
 
         private void BindSelectVale()
         {
-            this.ServiceDescription.Text = this.Service.ServiceDescription;
-            this.ServicePolicy.SelectedItem = this.ServicePolicyList.First(x => x.Key == this.Service.ServicePolicy.ToString());
-            this.ServiceType.SelectedItem = this.ServiceTypeList.First(x => x.Key == this.Service.ServiceTypeId);
-            this.Service.PrepareOperations();
-            foreach (var serviceObject in this.Service.Operations.GroupBy(x => x.OperateTarget))
+            this.ServiceDescription.Text = this.BoosterService.ServiceDescription;
+            this.ServicePolicy.SelectedItem = this.ServicePolicyList.First(x => x.Key == this.BoosterService.ServicePolicy.ToString());
+            this.ServiceType.SelectedItem = this.ServiceTypeList.First(x => x.Key == this.BoosterService.ServiceTypeId);
+            foreach (var serviceObject in this.BoosterService.Operations.GroupBy(x => x.OperateTarget))
             {
                 var serviceControl = this.Controls.Find($"ServiceDo{serviceObject.Key}", true).First();
                 var opObjects = serviceObject.SelectMany(x => x.Operations);
@@ -105,16 +118,16 @@ namespace MapleAutoBooster
             {
                 return;
             }
-            Service = (AbstractService)Activator.CreateInstance(Type.GetType($"MapleAutoBooster.Service.{this.ServiceType.SelectedValue}"));
-            Service.ServiceTypeId = Convert.ToString(this.ServiceType.SelectedValue);
-            Service.ServiceName = Convert.ToString(this.ServiceType.Text);
-            Service.ServicePolicy = (ServicePolicyEnum)Enum.Parse(typeof(ServicePolicyEnum), this.ServicePolicy.SelectedValue.ToString());
+            BoosterService = (AbstractBoosterService)Activator.CreateInstance(Type.GetType(this.ServiceType.SelectedValue.ToString()));
+            BoosterService.ServiceTypeId = Convert.ToString(this.ServiceType.SelectedValue);
+            BoosterService.ServiceName = Convert.ToString(this.ServiceType.Text);
+            BoosterService.ServicePolicy = (ServicePolicyEnum)Enum.Parse(typeof(ServicePolicyEnum), this.ServicePolicy.SelectedValue.ToString());
             this.BindSelectVale();
         }
 
         private void ServicePolicy_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Service.ServicePolicy = (ServicePolicyEnum)Enum.Parse(typeof(ServicePolicyEnum), this.ServicePolicy.SelectedValue.ToString());
+            BoosterService.ServicePolicy = (ServicePolicyEnum)Enum.Parse(typeof(ServicePolicyEnum), this.ServicePolicy.SelectedValue.ToString());
         }
 
         private void ServiceDo_Leave(object sender, EventArgs e)
@@ -122,14 +135,14 @@ namespace MapleAutoBooster
             var ServiceDoBox = (Control)sender;
             var ServiceTarget = Convert.ToString(ServiceDoBox.Tag);
             var ServiceText = ServiceDoBox.Text;
-            var ServiceDoOperations = this.Service.Operations.Where(x => x.OperateTarget == ServiceTarget).FirstOrDefault();
+            var ServiceDoOperations = this.BoosterService.Operations.Where(x => x.OperateTarget == ServiceTarget).FirstOrDefault();
             if (ServiceDoOperations == null)
             {
                 ServiceDoOperations = new OperateObject();
                 ServiceDoOperations.OperateId = Guid.NewGuid().ToString();
                 ServiceDoOperations.OperateTarget = ServiceTarget;
                 ServiceDoOperations.Operations = new List<IOperation>();
-                this.Service.Operations.Add(ServiceDoOperations);
+                this.BoosterService.Operations.Add(ServiceDoOperations);
             }
             else
                 ServiceDoOperations.Operations.Clear();
@@ -139,8 +152,10 @@ namespace MapleAutoBooster
             {
                 var operation = new Operation(item);
                 ServiceDoOperations.Operations.Add(operation);
-                var text = this.Service.OperationText(this.Service, operation);
-                sb.AppendLine(text);
+                this.BoosterService.HandleOperationMethod(operation.OperationString, (m, p) =>
+                {
+                    sb.AppendLine(this.BoosterService.GetOperationMethodText(m, p));
+                });
             }
             var serviceDescription = this.Controls.Find($"ServiceDescription{ServiceTarget}", true).First();
             serviceDescription.Text = sb.ToString();
@@ -148,7 +163,7 @@ namespace MapleAutoBooster
 
         private void ServiceDescription_TextChanged(object sender, EventArgs e)
         {
-            this.Service.ServiceDescription = this.ServiceDescription.Text;
+            this.BoosterService.ServiceDescription = this.ServiceDescription.Text;
         }
     }
 }

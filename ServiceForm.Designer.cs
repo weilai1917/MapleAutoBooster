@@ -125,6 +125,7 @@
             // 
             // ServiceBeforeLayout
             // 
+            this.ServiceBeforeLayout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ServiceBeforeLayout.Controls.Add(this.ServiceDo0);
             this.ServiceBeforeLayout.Controls.Add(this.ServiceDescription0);
             this.ServiceBeforeLayout.Location = new System.Drawing.Point(4, 26);
@@ -132,16 +133,18 @@
             this.ServiceBeforeLayout.Padding = new System.Windows.Forms.Padding(3);
             this.ServiceBeforeLayout.Size = new System.Drawing.Size(452, 467);
             this.ServiceBeforeLayout.TabIndex = 0;
-            this.ServiceBeforeLayout.Text = "执行判断";
+            this.ServiceBeforeLayout.Text = "执行前";
             this.ServiceBeforeLayout.UseVisualStyleBackColor = true;
             // 
             // ServiceDo0
             // 
             this.ServiceDo0.BackColor = System.Drawing.Color.White;
+            this.ServiceDo0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ServiceDo0.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ServiceDo0.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServiceDo0.Location = new System.Drawing.Point(3, 3);
             this.ServiceDo0.Name = "ServiceDo0";
-            this.ServiceDo0.Size = new System.Drawing.Size(446, 311);
+            this.ServiceDo0.Size = new System.Drawing.Size(222, 459);
             this.ServiceDo0.TabIndex = 4;
             this.ServiceDo0.Tag = "0";
             this.ServiceDo0.Text = "";
@@ -150,12 +153,13 @@
             // ServiceDescription0
             // 
             this.ServiceDescription0.BackColor = System.Drawing.Color.GhostWhite;
-            this.ServiceDescription0.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ServiceDescription0.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ServiceDescription0.Location = new System.Drawing.Point(3, 314);
+            this.ServiceDescription0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ServiceDescription0.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ServiceDescription0.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServiceDescription0.Location = new System.Drawing.Point(225, 3);
             this.ServiceDescription0.Name = "ServiceDescription0";
             this.ServiceDescription0.ReadOnly = true;
-            this.ServiceDescription0.Size = new System.Drawing.Size(446, 150);
+            this.ServiceDescription0.Size = new System.Drawing.Size(222, 459);
             this.ServiceDescription0.TabIndex = 5;
             this.ServiceDescription0.Tag = "0";
             this.ServiceDescription0.Text = "";
@@ -169,16 +173,18 @@
             this.ServiceDoingLayout.Padding = new System.Windows.Forms.Padding(3);
             this.ServiceDoingLayout.Size = new System.Drawing.Size(452, 467);
             this.ServiceDoingLayout.TabIndex = 1;
-            this.ServiceDoingLayout.Text = "服务操作";
+            this.ServiceDoingLayout.Text = "执行服务";
             this.ServiceDoingLayout.UseVisualStyleBackColor = true;
             // 
             // ServiceDo1
             // 
             this.ServiceDo1.BackColor = System.Drawing.Color.White;
+            this.ServiceDo1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ServiceDo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ServiceDo1.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServiceDo1.Location = new System.Drawing.Point(3, 3);
             this.ServiceDo1.Name = "ServiceDo1";
-            this.ServiceDo1.Size = new System.Drawing.Size(446, 311);
+            this.ServiceDo1.Size = new System.Drawing.Size(224, 461);
             this.ServiceDo1.TabIndex = 0;
             this.ServiceDo1.Tag = "1";
             this.ServiceDo1.Text = "";
@@ -187,12 +193,13 @@
             // ServiceDescription1
             // 
             this.ServiceDescription1.BackColor = System.Drawing.Color.GhostWhite;
-            this.ServiceDescription1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ServiceDescription1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ServiceDescription1.Location = new System.Drawing.Point(3, 314);
+            this.ServiceDescription1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ServiceDescription1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ServiceDescription1.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServiceDescription1.Location = new System.Drawing.Point(227, 3);
             this.ServiceDescription1.Name = "ServiceDescription1";
             this.ServiceDescription1.ReadOnly = true;
-            this.ServiceDescription1.Size = new System.Drawing.Size(446, 150);
+            this.ServiceDescription1.Size = new System.Drawing.Size(222, 461);
             this.ServiceDescription1.TabIndex = 1;
             this.ServiceDescription1.Tag = "1";
             this.ServiceDescription1.Text = "";
@@ -207,15 +214,17 @@
             this.ServiceAfterLayout.Padding = new System.Windows.Forms.Padding(3);
             this.ServiceAfterLayout.Size = new System.Drawing.Size(452, 467);
             this.ServiceAfterLayout.TabIndex = 2;
-            this.ServiceAfterLayout.Text = "服务操作（后）";
+            this.ServiceAfterLayout.Text = "执行策略后执行";
             // 
             // ServiceDo2
             // 
             this.ServiceDo2.BackColor = System.Drawing.Color.White;
+            this.ServiceDo2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ServiceDo2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ServiceDo2.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServiceDo2.Location = new System.Drawing.Point(3, 3);
             this.ServiceDo2.Name = "ServiceDo2";
-            this.ServiceDo2.Size = new System.Drawing.Size(446, 311);
+            this.ServiceDo2.Size = new System.Drawing.Size(224, 461);
             this.ServiceDo2.TabIndex = 2;
             this.ServiceDo2.Tag = "2";
             this.ServiceDo2.Text = "";
@@ -224,12 +233,13 @@
             // ServiceDescription2
             // 
             this.ServiceDescription2.BackColor = System.Drawing.Color.GhostWhite;
-            this.ServiceDescription2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ServiceDescription2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ServiceDescription2.Location = new System.Drawing.Point(3, 314);
+            this.ServiceDescription2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ServiceDescription2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ServiceDescription2.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServiceDescription2.Location = new System.Drawing.Point(227, 3);
             this.ServiceDescription2.Name = "ServiceDescription2";
             this.ServiceDescription2.ReadOnly = true;
-            this.ServiceDescription2.Size = new System.Drawing.Size(446, 150);
+            this.ServiceDescription2.Size = new System.Drawing.Size(222, 461);
             this.ServiceDescription2.TabIndex = 3;
             this.ServiceDescription2.Tag = "2";
             this.ServiceDescription2.Text = "";
@@ -311,11 +321,11 @@
         private System.Windows.Forms.Panel ControlLayout;
         private System.Windows.Forms.TabPage ServiceAfterLayout;
         private System.Windows.Forms.RichTextBox ServiceDo1;
-        private System.Windows.Forms.RichTextBox ServiceDescription1;
         private System.Windows.Forms.RichTextBox ServiceDo2;
         private System.Windows.Forms.RichTextBox ServiceDescription2;
         private System.Windows.Forms.RichTextBox ServiceDo0;
         private System.Windows.Forms.RichTextBox ServiceDescription0;
         private System.Windows.Forms.ComboBox ServiceType;
+        private System.Windows.Forms.RichTextBox ServiceDescription1;
     }
 }

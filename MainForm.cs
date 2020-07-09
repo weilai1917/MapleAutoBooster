@@ -1,9 +1,11 @@
 ﻿using MapleAutoBooster;
 using MapleAutoBooster.Abstract;
+using MapleAutoBooster.ToolBox;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -15,12 +17,15 @@ namespace MapleAutoBooster
 {
     public partial class MainForm : Form
     {
-        bool Start = false;
+        private bool Start = false;
         private MapleConfig MapleConfig;
 
         public MainForm()
         {
             MapleConfig = new MapleConfig();
+            if (this.MapleConfig.ServiceData == null)
+                this.MapleConfig.ServiceData = new List<ServiceConfig>();
+
             InitializeComponent();
             this.ReloadServices();
         }
@@ -103,7 +108,7 @@ namespace MapleAutoBooster
                 Parallel.ForEach(this.MapleConfig.ServiceData.Where(x => x.IsRun), new Action<ServiceConfig>(t =>
                 {
                     var service = ServiceBuilder.ReBuildService(t, true);
-                    service.Run("1", ref Start);//run 将会在这阻塞
+                    service.RunAllOperations("1", ref Start);//run 将会在这阻塞
 
                     //如果出来了，就继续走another service
                     if (service.AnotherOperations != null && service.AnotherOperations.Count > 0)
@@ -122,7 +127,7 @@ namespace MapleAutoBooster
             foreach (var serviceId in anotherOperations)
             {
                 var another = ServiceBuilder.ReBuildService(this.MapleConfig.ServiceData.First(x => x.Guid == serviceId), true);
-                another.Run("1", ref Start);
+                another.RunAllOperations("1", ref Start);
                 if (another.AnotherOperations != null)
                 {
                     this.RecursionService(another.AnotherOperations.Distinct().ToList());
@@ -262,5 +267,6 @@ namespace MapleAutoBooster
         {
             this.MapleConfig.Save();
         }
+
     }
 }

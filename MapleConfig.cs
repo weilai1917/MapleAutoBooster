@@ -30,6 +30,7 @@ namespace MapleAutoBooster
         public bool IsRun { get; set; }
         public string Operations { get; set; }
 
+        //由于自带的xml序列化不支持集合再集合，利用string反序列化吧
         //public ICollection<OperateObject> Operatetions { get; set; }
     }
 }

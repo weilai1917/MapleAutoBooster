@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace MapleAutoBooster
 {
-
     public class CustomBindValue
     {
         public string Key { get; set; }
