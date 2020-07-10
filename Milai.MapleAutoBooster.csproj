@@ -69,8 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractService\AbstractOperateService.cs" />
-    <Compile Include="AbstractService\IService2.cs" />
+    <Compile Include="AbstractService\AbstractOperation.cs" />
     <Compile Include="AbstractService\AbstractBoosterService.cs" />
     <Compile Include="AbstractService\IOperation.cs" />
     <Compile Include="AbstractService\OperateObject.cs" />

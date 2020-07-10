@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MapleAutoBooster
 {
@@ -39,6 +41,28 @@ namespace MapleAutoBooster
                 throw new Exception("Error.\r\n" + $"Executable: {executable}\r\n"
                                     + $"Arguments: {arg}");
             }
+        }
+
+        public static void LogTxt(string strLog, bool dev)
+        {
+            if (!dev)
+                return;
+            string sFileName = Application.StartupPath + "\\" + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
+            FileStream fs;
+            StreamWriter sw;
+            if (File.Exists(sFileName))
+            //验证文件是否存在，有则追加，无则创建
+            {
+                fs = new FileStream(sFileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+            }
+            else
+            {
+                fs = new FileStream(sFileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+            }
+            sw = new StreamWriter(fs);
+            sw.WriteLine("[" + DateTime.Now.ToString("HH:mm:ss fff") + "]" + strLog);
+            sw.Close();
+            fs.Close();
         }
 
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]

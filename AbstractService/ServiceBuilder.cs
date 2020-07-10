@@ -1,11 +1,6 @@
-﻿using MapleAutoBooster.AbstractOperate;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MapleAutoBooster.Abstract
 {
@@ -40,13 +35,11 @@ namespace MapleAutoBooster.Abstract
                     foreach (var opItem in item["Operations"] as JArray)
                     {
                         var operation = new Operation(opItem["OperationString"].ToString());
-                        service.HandleOperationMethod(operation.OperationString, (m, p) =>
-                        {
-                            if (service.ValidateOperationMethod(m, p))
-                            {
-                                opObject.Operations.Add(operation);
-                            }
-                        });
+                        operation.HandleOperationMethod(service, (m, p) =>
+                         {
+                             if (operation.ValidateOperationMethod(m, p))
+                                 opObject.Operations.Add(operation);
+                         });
                     }
                     service.Operations.Add(opObject);
                 }

@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 namespace MapleAutoBooster.Abstract
 {
     [Serializable]
-    public class Operation : IOperation
+    public class Operation : AbstractOperation, IOperation
     {
-        private string _OperationString;
-        public string OperationString { get => _OperationString; set => _OperationString = value; }
-
         public Operation(string opString)
         {
-            this._OperationString = opString;
+            this.OperationString = opString;
         }
 
         public string DoWork(Func<string> work)

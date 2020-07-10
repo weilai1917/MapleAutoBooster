@@ -83,6 +83,7 @@ namespace MapleAutoBooster
             this.MapleConfig.Reload();
             this.ReloadServices();
         }
+
         private void ServiceList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1 || e.ColumnIndex == -1)
@@ -109,7 +110,7 @@ namespace MapleAutoBooster
                 this.BtnRecordKey.Enabled = lockCtl;
             }));
         }
-       
+
         private void ServiceList_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (ServiceList.IsCurrentCellDirty)
@@ -118,5 +119,22 @@ namespace MapleAutoBooster
             }
         }
 
+        private void LogTxt(string logTxt)
+        {
+            this.LogBox.BeginInvoke(new Action(() =>
+            {
+                if (this.LogBox.Lines.Length > 2000)
+                {
+                    this.LogBox.Text = "";
+                }
+                string logAppend = DateTime.Now.ToString("[HH:mm:ss]: ") + logTxt + "\r\n";
+                this.LogBox.AppendText(logAppend);
+                this.LogBox.Select((this.LogBox.Text.Length - logAppend.Length) + 1, logAppend.Length - 1);
+                this.LogBox.SelectionFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.LogBox.ScrollToCaret();
+                this.LogBox.SelectionStart = this.LogBox.Text.Length;
+                Util.LogTxt(logTxt, true);
+            }));
+        }
     }
 }
