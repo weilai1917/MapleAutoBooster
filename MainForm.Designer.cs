@@ -30,11 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BtnUser = new System.Windows.Forms.ToolStripButton();
             this.BtnConnect = new System.Windows.Forms.ToolStripButton();
@@ -45,15 +45,15 @@
             this.LogBox = new System.Windows.Forms.RichTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ServiceList = new System.Windows.Forms.DataGridView();
-            this.IsRun = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.serviceDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.mapleConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.IsRun = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.guidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceTypeIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceDescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.servicePolicyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operationsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mapleConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServiceList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.serviceDataBindingSource)).BeginInit();
@@ -72,7 +72,7 @@
             this.BtnRecordKey});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(445, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(444, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -136,18 +136,18 @@
             this.LogBox.BackColor = System.Drawing.Color.White;
             this.LogBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.LogBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.LogBox.Location = new System.Drawing.Point(0, 224);
+            this.LogBox.Location = new System.Drawing.Point(0, 221);
             this.LogBox.Name = "LogBox";
             this.LogBox.ReadOnly = true;
-            this.LogBox.Size = new System.Drawing.Size(445, 343);
+            this.LogBox.Size = new System.Drawing.Size(444, 343);
             this.LogBox.TabIndex = 2;
             this.LogBox.Text = "";
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 567);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 564);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(445, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(444, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -156,14 +156,14 @@
             this.ServiceList.AutoGenerateColumns = false;
             this.ServiceList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ServiceList.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ServiceList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ServiceList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.ServiceList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ServiceList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IsRun,
@@ -177,38 +177,42 @@
             this.ServiceList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ServiceList.Location = new System.Drawing.Point(0, 25);
             this.ServiceList.Name = "ServiceList";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ServiceList.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ServiceList.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.ServiceList.RowHeadersVisible = false;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ServiceList.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ServiceList.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.ServiceList.RowTemplate.Height = 23;
             this.ServiceList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ServiceList.Size = new System.Drawing.Size(445, 199);
+            this.ServiceList.Size = new System.Drawing.Size(444, 196);
             this.ServiceList.TabIndex = 4;
             this.ServiceList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ServiceList_CellContentClick);
             this.ServiceList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ServiceList_CellDoubleClick);
             this.ServiceList.CurrentCellDirtyStateChanged += new System.EventHandler(this.ServiceList_CurrentCellDirtyStateChanged);
+            // 
+            // serviceDataBindingSource
+            // 
+            this.serviceDataBindingSource.DataMember = "ServiceData";
+            this.serviceDataBindingSource.DataSource = this.mapleConfigBindingSource;
+            // 
+            // mapleConfigBindingSource
+            // 
+            this.mapleConfigBindingSource.DataSource = typeof(MapleAutoBooster.MapleConfig);
             // 
             // IsRun
             // 
             this.IsRun.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.IsRun.DataPropertyName = "IsRun";
             this.IsRun.FillWeight = 104.8624F;
-            this.IsRun.HeaderText = "";
+            this.IsRun.HeaderText = "启动";
             this.IsRun.Name = "IsRun";
             this.IsRun.Width = 40;
-            // 
-            // serviceDataBindingSource
-            // 
-            this.serviceDataBindingSource.DataMember = "ServiceData";
-            this.serviceDataBindingSource.DataSource = this.mapleConfigBindingSource;
             // 
             // guidDataGridViewTextBoxColumn
             // 
@@ -218,6 +222,7 @@
             this.guidDataGridViewTextBoxColumn.HeaderText = "Id";
             this.guidDataGridViewTextBoxColumn.Name = "guidDataGridViewTextBoxColumn";
             this.guidDataGridViewTextBoxColumn.ReadOnly = true;
+            this.guidDataGridViewTextBoxColumn.Visible = false;
             this.guidDataGridViewTextBoxColumn.Width = 80;
             // 
             // serviceTypeIdDataGridViewTextBoxColumn
@@ -252,8 +257,8 @@
             // 
             this.servicePolicyDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.servicePolicyDataGridViewTextBoxColumn.DataPropertyName = "ServicePolicy";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.servicePolicyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.servicePolicyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.servicePolicyDataGridViewTextBoxColumn.FillWeight = 97.87158F;
             this.servicePolicyDataGridViewTextBoxColumn.HeaderText = "服务策略";
             this.servicePolicyDataGridViewTextBoxColumn.Name = "servicePolicyDataGridViewTextBoxColumn";
@@ -264,24 +269,20 @@
             // 
             this.operationsDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.operationsDataGridViewTextBoxColumn.DataPropertyName = "Operations";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.operationsDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.operationsDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.operationsDataGridViewTextBoxColumn.HeaderText = "操作";
             this.operationsDataGridViewTextBoxColumn.Name = "operationsDataGridViewTextBoxColumn";
             this.operationsDataGridViewTextBoxColumn.ReadOnly = true;
             this.operationsDataGridViewTextBoxColumn.Visible = false;
             this.operationsDataGridViewTextBoxColumn.Width = 57;
             // 
-            // mapleConfigBindingSource
-            // 
-            this.mapleConfigBindingSource.DataSource = typeof(MapleAutoBooster.MapleConfig);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(445, 589);
+            this.ClientSize = new System.Drawing.Size(444, 586);
             this.Controls.Add(this.ServiceList);
             this.Controls.Add(this.LogBox);
             this.Controls.Add(this.statusStrip1);
@@ -294,7 +295,6 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "冒险发射器";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServiceList)).EndInit();
@@ -318,6 +318,7 @@
         private System.Windows.Forms.ToolStripButton BtnDelService;
         private System.Windows.Forms.BindingSource serviceDataBindingSource;
         private System.Windows.Forms.BindingSource mapleConfigBindingSource;
+        private System.Windows.Forms.ToolStripButton BtnRecordKey;
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsRun;
         private System.Windows.Forms.DataGridViewTextBoxColumn guidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn serviceTypeIdDataGridViewTextBoxColumn;
@@ -325,6 +326,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn serviceDescriptionDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn servicePolicyDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn operationsDataGridViewTextBoxColumn;
-        private System.Windows.Forms.ToolStripButton BtnRecordKey;
     }
 }

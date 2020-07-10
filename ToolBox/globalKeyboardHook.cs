@@ -15,7 +15,7 @@ namespace MapleAutoBooster.ToolBox
         /// defines the callback type for the hook
         /// </summary>
         public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct lParam);
-
+        private static keyboardHookProc staticProc;
         public struct keyboardHookStruct
         {
             public int vkCode;
@@ -80,7 +80,8 @@ namespace MapleAutoBooster.ToolBox
         public void hook()
         {
             IntPtr hInstance = LoadLibrary("User32");
-            hhook = SetWindowsHookEx(WH_KEYBOARD_LL, hookProc, hInstance, 0);
+            staticProc = new keyboardHookProc(hookProc);
+            hhook = SetWindowsHookEx(WH_KEYBOARD_LL, staticProc, hInstance, 0);
         }
 
         /// <summary>

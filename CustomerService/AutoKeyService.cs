@@ -65,10 +65,12 @@ namespace MapleAutoBooster.Service
         {
             List<Tuple<string, string>> defaultOp = new List<Tuple<string, string>>();
             defaultOp.Add(new Tuple<string, string>("0", "LockMapleWindow[]"));
-            defaultOp.Add(new Tuple<string, string>("1", "PressKey[A,down,20]"));
+            defaultOp.Add(new Tuple<string, string>("1", "PressKey[A,0,20]"));
+            defaultOp.Add(new Tuple<string, string>("1", "PressKey[A,1,20]"));
             defaultOp.Add(new Tuple<string, string>("1", "PressMouseKey[MOVE,1,100,92,355]"));
             defaultOp.Add(new Tuple<string, string>("1", "PressMouseKey[Left,1,20,0,0]"));
-            defaultOp.Add(new Tuple<string, string>("1", "PressDirectionKey[Left,down,20]"));
+            defaultOp.Add(new Tuple<string, string>("1", "PressKey[Left,0,20]"));
+            defaultOp.Add(new Tuple<string, string>("1", "PressKey[Left,1,20]"));
             return defaultOp;
         }
 
@@ -86,7 +88,7 @@ namespace MapleAutoBooster.Service
         private IntPtr MapleWindow = IntPtr.Zero;
 
         [ServiceMethod]
-        [Description("{1}键{0}，{2}毫秒")]
+        [Description("{1}键{0}，等待{2}毫秒")]
         public void PressKey(string keyTemp, string keyAction, string keyTime)
         {
             Keys key = (Keys)Enum.Parse(typeof(Keys), keyTemp);
@@ -175,10 +177,10 @@ namespace MapleAutoBooster.Service
             int actionValue = WM_KEYDOWN;
             switch (action.ToUpperInvariant())
             {
-                case "UP":
+                case "1":
                     actionValue = WM_KEYUP;
                     break;
-                case "DOWN":
+                case "0":
                     actionValue = WM_KEYDOWN;
                     break;
                 default:
@@ -192,10 +194,10 @@ namespace MapleAutoBooster.Service
             int actionValue = 0;
             switch (action.ToUpperInvariant())
             {
-                case "UP":
+                case "1":
                     actionValue = 2;
                     break;
-                case "DOWN":
+                case "0":
                     actionValue = 0;
                     break;
                 default:

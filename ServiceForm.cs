@@ -110,6 +110,16 @@ namespace MapleAutoBooster
                 serviceControl.Text = String.Join("\n", opObjects.Select(x => x.OperationString));
                 this.ServiceDo_Leave(serviceControl, null);
             }
+            this.ListCanActMethod.Items.Clear();
+            var canActMethodName = this.BoosterService.GetType().GetMethods().Where(x => x.GetCustomAttributes(typeof(ServiceMethodAttribute), false).Any()).Select(x => x.Name);
+            if (canActMethodName != null && canActMethodName.Count() > 0)
+            {
+                foreach (var item in canActMethodName)
+                {
+                    this.ListCanActMethod.Items.Add(item);
+                }
+            }
+
         }
 
         private void ServiceType_SelectionChangeCommitted(object sender, EventArgs e)
@@ -132,8 +142,6 @@ namespace MapleAutoBooster
 
         private void ServiceDo_Leave(object sender, EventArgs e)
         {
-            return;
-
             var ServiceDoBox = (Control)sender;
             var ServiceTarget = Convert.ToString(ServiceDoBox.Tag);
             var ServiceText = ServiceDoBox.Text;
@@ -154,13 +162,13 @@ namespace MapleAutoBooster
             {
                 var operation = new Operation(item);
                 ServiceDoOperations.Operations.Add(operation);
-                this.BoosterService.HandleOperationMethod(operation.OperationString, (m, p) =>
-                {
-                    sb.AppendLine(this.BoosterService.GetOperationMethodText(m, p));
-                });
+                //this.BoosterService.HandleOperationMethod(operation.OperationString, (m, p) =>
+                //{
+                //    sb.AppendLine(this.BoosterService.GetOperationMethodText(m, p));
+                //});
             }
-            var serviceDescription = this.Controls.Find($"ServiceDescription{ServiceTarget}", true).First();
-            serviceDescription.Text = sb.ToString();
+            //var serviceDescription = this.Controls.Find($"ServiceDescription{ServiceTarget}", true).First();
+            //serviceDescription.Text = sb.ToString();
         }
 
         private void ServiceDescription_TextChanged(object sender, EventArgs e)

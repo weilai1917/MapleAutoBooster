@@ -44,13 +44,12 @@
             this.ServiceDo2 = new System.Windows.Forms.RichTextBox();
             this.TopLayout = new System.Windows.Forms.Panel();
             this.ServiceType = new System.Windows.Forms.ComboBox();
-            this.ControlLayout = new System.Windows.Forms.Panel();
+            this.ListCanActMethod = new System.Windows.Forms.ListView();
             this.ServicePanel.SuspendLayout();
             this.ServiceBeforeLayout.SuspendLayout();
             this.ServiceDoingLayout.SuspendLayout();
             this.ServiceAfterLayout.SuspendLayout();
             this.TopLayout.SuspendLayout();
-            this.ControlLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -75,16 +74,15 @@
             // 
             this.ServiceDescription.Location = new System.Drawing.Point(72, 35);
             this.ServiceDescription.Name = "ServiceDescription";
-            this.ServiceDescription.Size = new System.Drawing.Size(273, 23);
+            this.ServiceDescription.Size = new System.Drawing.Size(238, 23);
             this.ServiceDescription.TabIndex = 4;
             this.ServiceDescription.TextChanged += new System.EventHandler(this.ServiceDescription_TextChanged);
             // 
             // BtnSave
             // 
-            this.BtnSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtnSave.Location = new System.Drawing.Point(0, 0);
+            this.BtnSave.Location = new System.Drawing.Point(314, 3);
             this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Size = new System.Drawing.Size(349, 50);
+            this.BtnSave.Size = new System.Drawing.Size(127, 85);
             this.BtnSave.TabIndex = 10;
             this.BtnSave.Text = "保存";
             this.BtnSave.UseVisualStyleBackColor = true;
@@ -105,7 +103,7 @@
             this.ServicePolicy.FormattingEnabled = true;
             this.ServicePolicy.Location = new System.Drawing.Point(72, 63);
             this.ServicePolicy.Name = "ServicePolicy";
-            this.ServicePolicy.Size = new System.Drawing.Size(273, 25);
+            this.ServicePolicy.Size = new System.Drawing.Size(238, 25);
             this.ServicePolicy.TabIndex = 12;
             this.ServicePolicy.SelectionChangeCommitted += new System.EventHandler(this.ServicePolicy_SelectionChangeCommitted);
             // 
@@ -114,11 +112,11 @@
             this.ServicePanel.Controls.Add(this.ServiceBeforeLayout);
             this.ServicePanel.Controls.Add(this.ServiceDoingLayout);
             this.ServicePanel.Controls.Add(this.ServiceAfterLayout);
-            this.ServicePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ServicePanel.Location = new System.Drawing.Point(0, 95);
+            this.ServicePanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ServicePanel.Location = new System.Drawing.Point(0, 92);
             this.ServicePanel.Name = "ServicePanel";
             this.ServicePanel.SelectedIndex = 0;
-            this.ServicePanel.Size = new System.Drawing.Size(349, 378);
+            this.ServicePanel.Size = new System.Drawing.Size(314, 469);
             this.ServicePanel.TabIndex = 13;
             // 
             // ServiceBeforeLayout
@@ -128,7 +126,7 @@
             this.ServiceBeforeLayout.Location = new System.Drawing.Point(4, 26);
             this.ServiceBeforeLayout.Name = "ServiceBeforeLayout";
             this.ServiceBeforeLayout.Padding = new System.Windows.Forms.Padding(3);
-            this.ServiceBeforeLayout.Size = new System.Drawing.Size(341, 467);
+            this.ServiceBeforeLayout.Size = new System.Drawing.Size(306, 439);
             this.ServiceBeforeLayout.TabIndex = 0;
             this.ServiceBeforeLayout.Text = "执行前";
             this.ServiceBeforeLayout.UseVisualStyleBackColor = true;
@@ -138,10 +136,10 @@
             this.ServiceDo0.BackColor = System.Drawing.Color.White;
             this.ServiceDo0.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ServiceDo0.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ServiceDo0.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServiceDo0.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServiceDo0.Location = new System.Drawing.Point(3, 3);
             this.ServiceDo0.Name = "ServiceDo0";
-            this.ServiceDo0.Size = new System.Drawing.Size(333, 459);
+            this.ServiceDo0.Size = new System.Drawing.Size(298, 431);
             this.ServiceDo0.TabIndex = 4;
             this.ServiceDo0.Tag = "0";
             this.ServiceDo0.Text = "";
@@ -154,7 +152,7 @@
             this.ServiceDoingLayout.Location = new System.Drawing.Point(4, 26);
             this.ServiceDoingLayout.Name = "ServiceDoingLayout";
             this.ServiceDoingLayout.Padding = new System.Windows.Forms.Padding(3);
-            this.ServiceDoingLayout.Size = new System.Drawing.Size(341, 467);
+            this.ServiceDoingLayout.Size = new System.Drawing.Size(306, 439);
             this.ServiceDoingLayout.TabIndex = 1;
             this.ServiceDoingLayout.Text = "执行服务";
             this.ServiceDoingLayout.UseVisualStyleBackColor = true;
@@ -164,10 +162,10 @@
             this.ServiceDo1.BackColor = System.Drawing.Color.White;
             this.ServiceDo1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ServiceDo1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ServiceDo1.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServiceDo1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServiceDo1.Location = new System.Drawing.Point(3, 3);
             this.ServiceDo1.Name = "ServiceDo1";
-            this.ServiceDo1.Size = new System.Drawing.Size(333, 459);
+            this.ServiceDo1.Size = new System.Drawing.Size(298, 431);
             this.ServiceDo1.TabIndex = 0;
             this.ServiceDo1.Tag = "1";
             this.ServiceDo1.Text = "";
@@ -181,7 +179,7 @@
             this.ServiceAfterLayout.Location = new System.Drawing.Point(4, 26);
             this.ServiceAfterLayout.Name = "ServiceAfterLayout";
             this.ServiceAfterLayout.Padding = new System.Windows.Forms.Padding(3);
-            this.ServiceAfterLayout.Size = new System.Drawing.Size(341, 348);
+            this.ServiceAfterLayout.Size = new System.Drawing.Size(306, 439);
             this.ServiceAfterLayout.TabIndex = 2;
             this.ServiceAfterLayout.Text = "执行策略后执行";
             // 
@@ -190,10 +188,10 @@
             this.ServiceDo2.BackColor = System.Drawing.Color.White;
             this.ServiceDo2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ServiceDo2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ServiceDo2.Font = new System.Drawing.Font("Consolas", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServiceDo2.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServiceDo2.Location = new System.Drawing.Point(3, 3);
             this.ServiceDo2.Name = "ServiceDo2";
-            this.ServiceDo2.Size = new System.Drawing.Size(333, 340);
+            this.ServiceDo2.Size = new System.Drawing.Size(298, 431);
             this.ServiceDo2.TabIndex = 2;
             this.ServiceDo2.Tag = "2";
             this.ServiceDo2.Text = "";
@@ -201,6 +199,7 @@
             // 
             // TopLayout
             // 
+            this.TopLayout.Controls.Add(this.BtnSave);
             this.TopLayout.Controls.Add(this.ServiceType);
             this.TopLayout.Controls.Add(this.label1);
             this.TopLayout.Controls.Add(this.ServicePolicy);
@@ -210,7 +209,7 @@
             this.TopLayout.Dock = System.Windows.Forms.DockStyle.Top;
             this.TopLayout.Location = new System.Drawing.Point(0, 0);
             this.TopLayout.Name = "TopLayout";
-            this.TopLayout.Size = new System.Drawing.Size(349, 95);
+            this.TopLayout.Size = new System.Drawing.Size(444, 92);
             this.TopLayout.TabIndex = 14;
             // 
             // ServiceType
@@ -219,28 +218,34 @@
             this.ServiceType.FormattingEnabled = true;
             this.ServiceType.Location = new System.Drawing.Point(72, 5);
             this.ServiceType.Name = "ServiceType";
-            this.ServiceType.Size = new System.Drawing.Size(273, 25);
+            this.ServiceType.Size = new System.Drawing.Size(238, 25);
             this.ServiceType.TabIndex = 13;
             this.ServiceType.SelectionChangeCommitted += new System.EventHandler(this.ServiceType_SelectionChangeCommitted);
             // 
-            // ControlLayout
+            // ListCanActMethod
             // 
-            this.ControlLayout.Controls.Add(this.BtnSave);
-            this.ControlLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ControlLayout.Location = new System.Drawing.Point(0, 473);
-            this.ControlLayout.Name = "ControlLayout";
-            this.ControlLayout.Size = new System.Drawing.Size(349, 50);
-            this.ControlLayout.TabIndex = 15;
+            this.ListCanActMethod.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ListCanActMethod.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListCanActMethod.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ListCanActMethod.FullRowSelect = true;
+            this.ListCanActMethod.GridLines = true;
+            this.ListCanActMethod.LabelWrap = false;
+            this.ListCanActMethod.Location = new System.Drawing.Point(314, 92);
+            this.ListCanActMethod.Name = "ListCanActMethod";
+            this.ListCanActMethod.Size = new System.Drawing.Size(130, 469);
+            this.ListCanActMethod.TabIndex = 15;
+            this.ListCanActMethod.UseCompatibleStateImageBehavior = false;
+            this.ListCanActMethod.View = System.Windows.Forms.View.List;
             // 
             // ServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(349, 523);
+            this.ClientSize = new System.Drawing.Size(444, 561);
+            this.Controls.Add(this.ListCanActMethod);
             this.Controls.Add(this.ServicePanel);
             this.Controls.Add(this.TopLayout);
-            this.Controls.Add(this.ControlLayout);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -256,7 +261,6 @@
             this.ServiceAfterLayout.ResumeLayout(false);
             this.TopLayout.ResumeLayout(false);
             this.TopLayout.PerformLayout();
-            this.ControlLayout.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -273,11 +277,11 @@
         private System.Windows.Forms.TabPage ServiceBeforeLayout;
         private System.Windows.Forms.TabPage ServiceDoingLayout;
         private System.Windows.Forms.Panel TopLayout;
-        private System.Windows.Forms.Panel ControlLayout;
         private System.Windows.Forms.TabPage ServiceAfterLayout;
         private System.Windows.Forms.RichTextBox ServiceDo1;
         private System.Windows.Forms.RichTextBox ServiceDo2;
         private System.Windows.Forms.RichTextBox ServiceDo0;
         private System.Windows.Forms.ComboBox ServiceType;
+        private System.Windows.Forms.ListView ListCanActMethod;
     }
 }
