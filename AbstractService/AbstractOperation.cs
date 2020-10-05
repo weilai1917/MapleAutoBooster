@@ -37,9 +37,9 @@ namespace MapleAutoBooster.Abstract
             return method.GetParameters().Length == param.Length;
         }
 
-        public void ExeuteOperationMethod(MethodInfo method, string[] param)
+        public void ExeuteOperationMethod(AbstractBoosterService service, MethodInfo method, string[] param)
         {
-            method.Invoke(this, param);
+            method.Invoke(service, param);
         }
 
         public string GetOperationMethodText(MethodInfo method, string[] param)

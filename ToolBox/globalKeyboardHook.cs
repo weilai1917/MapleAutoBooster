@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace MapleAutoBooster.ToolBox
 {
+    /// <summary>
+    /// 键盘录制API
+    /// </summary>
     public class GlobalKeyboardHook
     {
         #region Constant, Structure and Delegate Definitions
@@ -120,6 +123,7 @@ namespace MapleAutoBooster.ToolBox
                 //}
             }
             return CallNextHookEx(hhook, code, wParam, ref lParam);
+
         }
         #endregion
 

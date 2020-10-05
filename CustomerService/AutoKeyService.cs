@@ -88,7 +88,7 @@ namespace MapleAutoBooster.Service
         private IntPtr MapleWindow = IntPtr.Zero;
 
         [ServiceMethod]
-        [Description("{1}键{0}，等待{2}毫秒")]
+        [Description("[0]键[A]，等待[100]毫秒")]
         public void PressKey(string keyTemp, string keyAction, string keyTime)
         {
             Keys key = (Keys)Enum.Parse(typeof(Keys), keyTemp);
@@ -126,7 +126,7 @@ namespace MapleAutoBooster.Service
         }
 
         [ServiceMethod]
-        [Description("{0}鼠标{1}")]
+        [Description("[0]鼠标，等待[100]毫秒")]
         public string PressMouseKey(string mouseAction)
         {
             string[] keyparam = mouseAction.Split(',');

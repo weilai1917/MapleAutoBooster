@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,12 +17,148 @@ namespace MapleAutoBooster
     {
         private GlobalKeyboardHook HookKey = null;
         private List<RecordKeyData> RecordList;
+        private Dictionary<int, string> HotKeyPairs = new Dictionary<int, string>();
+        private Dictionary<int, MethodInfo> HotKeyAction = new Dictionary<int, MethodInfo>();
         private Stopwatch RecordStopWatch = new Stopwatch();
+        private Stopwatch RecordStartWait = new Stopwatch();
 
-        private void BtnRecordKey_Click(object sender, EventArgs e)
+        #region API
+
+        [DllImport("kernel32.dll")]
+        public static extern uint GetLastError();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, KeyModifiers fsModifiers, Keys vk);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        [DllImport("kernel32.dll")]
+        public static extern UInt32 GlobalAddAtom(String lpString);
+
+        [DllImport("kernel32.dll")]
+        public static extern UInt32 GlobalDeleteAtom(UInt32 nAtom);
+
+        [Flags()]
+        public enum KeyModifiers
         {
+            None = 0,
+            Alt = 1,
+            Ctrl = 2,
+            Shift = 4,
+            WindowsKey = 8
+        }
+
+        #endregion
+
+        private void ReloadHotKeys()
+        {
+            if (HotKeyPairs != null)
+            {
+                foreach (var item in HotKeyPairs)
+                {
+                    UnregisterHotKey(this.Handle, item.Key);
+                    GlobalDeleteAtom((uint)item.Key);
+                }
+                HotKeyPairs.Clear();
+                HotKeyAction.Clear();
+            }
+
+            if (this.MapleConfig.HotKeys == null)
+                return;
+
+            foreach (var item in this.MapleConfig.HotKeys)
+            {
+                if (string.IsNullOrEmpty(item.Key) || string.IsNullOrEmpty(item.Value))
+                {
+                    continue;
+                }
+
+                int hotkeyid = (int)GlobalAddAtom(System.Guid.NewGuid().ToString());
+                var r = RegisterHotKey(this.Handle, hotkeyid, KeyModifiers.None, (Keys)Enum.Parse(typeof(Keys), item.Value));
+                if (r)
+                {
+                    HotKeyPairs.Add(hotkeyid, item.Key);
+                    HotKeyAction.Add(hotkeyid, this.GetType().GetMethod(item.Key));
+                }
+                else
+                {
+                    this.LogTxt($"{item.Value}热键注册占用，注册失败。");
+                }
+            }
+        }
+
+        private const int WM_HOTKEY = 0x312;
+        private const int WM_CREATE = 0x1;
+        private const int WM_DESTROY = 0x2;
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            switch (m.Msg)
+            {
+                case WM_HOTKEY:
+                    var paramKey = m.WParam.ToInt32();
+                    if (HotKeyAction.ContainsKey(paramKey) && HotKeyAction[paramKey] != null)
+                    {
+                        HotKeyAction[paramKey].Invoke(this, null);
+                    }
+                    break;
+                case WM_DESTROY:
+                    if (HotKeyPairs != null)
+                    {
+                        foreach (var item in HotKeyPairs)
+                        {
+                            UnregisterHotKey(this.Handle, item.Key);
+                            GlobalDeleteAtom((uint)item.Key);
+                        }
+                        HotKeyPairs.Clear();
+                        HotKeyAction.Clear();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void HotKeyServiceBoot()
+        {
+            if (!Start)
+            {
+                this.Text = "(๑•ᴗ•๑)启动中";
+                this.Start = true;
+                this.MapleConfig.Save();
+                this.StartAllService();
+            }
+            else
+            {
+                this.Text = "冒险发射器";
+                this.Start = false;
+                this.LockAllControl(true);
+            }
+        }
+
+        public void HotKeyKeyRecord()
+        {
+            if (Start)
+            {
+                MessageBox.Show("请先停止服务运行！", "发射！");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(CurrGroupKey))
+            {
+                MessageBox.Show("请先添加服务分组。", "发射！");
+                return;
+            }
             if (this.BtnRecordKey.Tag == null)
             {
+                if (RecordStartWait.Elapsed.TotalSeconds < 5)
+                {
+                    MessageBox.Show("消停一会吧，太快了，5秒后再试");
+                    return;
+                }
+
                 HookKey = new GlobalKeyboardHook();
                 HookKey.KeyDown += RecordKeyDownAction;
                 HookKey.KeyUp += RecordKeyUpAction;
@@ -29,21 +166,27 @@ namespace MapleAutoBooster
                 RecordStopWatch.Start();
                 this.BtnRecordKey.Tag = true;
                 this.BtnRecordKey.Text = "停止录制";
+                this.LogTxt("开始录制键盘。");
+                this.LogStatus("开始录制键盘。");
+                this.LockAllControl(false);
+                RecordStartWait.Restart();
             }
             else
             {
-
+                RecordStartWait.Stop();
                 #region 把RecordList专程一条记录，进行build
                 ServiceConfig config = new ServiceConfig();
                 config.Guid = Guid.NewGuid().ToString();
                 config.ServiceTypeId = "MapleAutoBooster.Service.AutoKeyService";
                 config.ServiceName = "自动按键";
                 config.ServicePolicy = Abstract.ServicePolicyEnum.Once;
+                config.ServiceGroup = CurrGroupKey;
                 config.ServiceDescription = $"总时长：{RecordList.Sum(x => x.Wait) / 1000}s，动作数：{RecordList.Count}";
                 var opObject1 = new OperateObject();
                 opObject1.OperateId = Guid.NewGuid().ToString();
                 opObject1.OperateTarget = "1";
                 opObject1.Operations = new List<IOperation>();
+                RecordList.RemoveAt(RecordList.Count - 1);
                 foreach (var item in RecordList)
                 {
                     opObject1.Operations.Add(new Operation($"PressKey[{item.Key},{item.Action},{item.Wait}]"));
@@ -63,12 +206,21 @@ namespace MapleAutoBooster
 
                 this.BtnRecordKey.Text = "录制键盘";
                 this.BtnRecordKey.Tag = null;
+                this.LogTxt("录制键盘已经停止。");
+                this.LogStatus("录制键盘已经停止。");
+                this.LockAllControl(true);
+
 
                 HookKey.KeyDown -= RecordKeyDownAction;
                 HookKey.KeyUp -= RecordKeyUpAction;
                 HookKey = null;
                 GC.Collect();
             }
+        }
+
+        public void HotKeyServiceStop()
+        {
+            Stop = !Stop;
         }
 
         public void RecordKeyDownAction(object sender, KeyEventArgs e)
@@ -88,131 +240,5 @@ namespace MapleAutoBooster
             RecordList.Add(new RecordKeyData(e.KeyData, 1, 0));
             RecordStopWatch.Restart();
         }
-
-        #region 全局热键
-
-        [DllImport("kernel32.dll")]
-        public static extern uint GetLastError();
-        //如果函数执行成功，返回值不为0。  
-        //如果函数执行失败，返回值为0。要得到扩展错误信息，调用GetLastError。  
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool RegisterHotKey(
-            IntPtr hWnd,                //要定义热键的窗口的句柄  
-            int id,                     //定义热键ID（不能与其它ID重复）            
-            KeyModifiers fsModifiers,   //标识热键是否在按Alt、Ctrl、Shift、Windows等键时才会生效  
-            Keys vk                     //定义热键的内容  
-            );
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool UnregisterHotKey(
-            IntPtr hWnd,                //要取消热键的窗口的句柄  
-            int id                      //要取消热键的ID  
-            );
-
-        //定义了辅助键的名称（将数字转变为字符以便于记忆，也可去除此枚举而直接使用数值）  
-        [Flags()]
-        public enum KeyModifiers
-        {
-            None = 0,
-            Alt = 1,
-            Ctrl = 2,
-            Shift = 4,
-            WindowsKey = 8
-        }
-        /// <summary>  
-        /// 注册热键  
-        /// </summary>  
-        /// <param name="hwnd">窗口句柄</param>  
-        /// <param name="hotKey_id">热键ID</param>  
-        /// <param name="keyModifiers">组合键</param>  
-        /// <param name="key">热键</param>  
-        public static void RegKey(IntPtr hwnd, int hotKey_id, KeyModifiers keyModifiers, Keys key)
-        {
-            try
-            {
-                if (!RegisterHotKey(hwnd, hotKey_id, keyModifiers, key))
-                {
-                    if (Marshal.GetLastWin32Error() == 1409) { MessageBox.Show("热键被占用 ！"); }
-                    else
-                    {
-                        MessageBox.Show("注册热键失败！");
-                    }
-                }
-            }
-            catch (Exception) { }
-        }
-        /// <summary>  
-        /// 注销热键  
-        /// </summary>  
-        /// <param name="hwnd">窗口句柄</param>  
-        /// <param name="hotKey_id">热键ID</param>  
-        public static void UnRegKey(IntPtr hwnd, int hotKey_id)
-        {
-            //注销Id号为hotKey_id的热键设定  
-            UnregisterHotKey(hwnd, hotKey_id);
-        }
-
-        private const int WM_HOTKEY = 0x312; //窗口消息-热键  
-        private const int WM_CREATE = 0x1; //窗口消息-创建  
-        private const int WM_DESTROY = 0x2; //窗口消息-销毁  
-        private const int F1 = 0x3572; //热键ID  
-        private const int F2 = 0x3576; //热键ID  
-        private const int F3 = 0x3578; //热键ID 
-        private const int F8 = 0x3588; //热键ID 
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-            switch (m.Msg)
-            {
-                case WM_HOTKEY: //窗口消息-热键ID  
-                    switch (m.WParam.ToInt32())
-                    {
-                        case F1: //热键ID  
-                            if (!Start)
-                            {
-                                this.Text = "(๑•ᴗ•๑)启动中";
-                                this.Start = true;
-                                this.MapleConfig.Save();
-                                this.StartAllService();
-                            }
-                            else
-                            {
-                                this.Text = "冒险发射器";
-                                this.Start = false;
-                                this.LockAllControl(true);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case WM_CREATE: //窗口消息-创建  
-                    RegKey(Handle, F1, KeyModifiers.None, Keys.F1);
-                    //RegKey(Handle, F8, KeyModifiers.None, Keys.F8);
-                    break;
-                case WM_DESTROY: //窗口消息-销毁  
-                    UnRegKey(Handle, F1); //销毁热键  
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        #endregion
-    }
-
-    public class RecordKeyData
-    {
-        public Keys Key { get; set; }
-        public int Action { get; set; }
-        public long Wait { get; set; }
-
-        public RecordKeyData(Keys key, int action, long wait)
-        {
-            this.Key = key;
-            this.Action = action;
-            this.Wait = wait;
-        }
-
     }
 }

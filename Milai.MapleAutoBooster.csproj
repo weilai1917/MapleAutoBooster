@@ -52,6 +52,29 @@
   <PropertyGroup>
     <ApplicationIcon>maplefavicon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -75,6 +98,18 @@
     <Compile Include="AbstractService\OperateObject.cs" />
     <Compile Include="AbstractService\Operation.cs" />
     <Compile Include="AbstractService\ServiceBuilder.cs" />
+    <Compile Include="AfterService\AlertMusicControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AfterService\AlertMusicControl.Designer.cs">
+      <DependentUpon>AlertMusicControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AfterService\InvokeServiceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AfterService\InvokeServiceControl.Designer.cs">
+      <DependentUpon>InvokeServiceControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServiceAttribute\ServiceMethodAttribute.cs" />
     <Compile Include="CustomBindValue.cs" />
     <Compile Include="MainForm.cs">
@@ -96,6 +131,12 @@
     <Compile Include="CustomerService\AutoKeyService.cs" />
     <Compile Include="CustomerService\ColorFinderService.cs" />
     <Compile Include="CustomerService\WzChangeService.cs" />
+    <Compile Include="SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToolBox\GlobalKeyboardHook.cs" />
     <Compile Include="ToolBox\MainForm_RecordKey.cs">
       <SubType>Form</SubType>
@@ -104,6 +145,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Util.cs" />
+    <EmbeddedResource Include="AfterService\AlertMusicControl.resx">
+      <DependentUpon>AlertMusicControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AfterService\InvokeServiceControl.resx">
+      <DependentUpon>InvokeServiceControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +166,9 @@
     </Compile>
     <EmbeddedResource Include="ServiceForm.resx">
       <DependentUpon>ServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\MapleConfig.datasource" />
@@ -136,6 +186,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Newtonsoft.Json.dll" />
     <Content Include="maplefavicon.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -18,7 +18,9 @@ namespace MapleAutoBooster
     public partial class MainForm : Form
     {
         private bool Start = false;
+        private bool Stop = false;
         private MapleConfig MapleConfig;
+        private string CurrGroupKey = string.Empty;
 
         public MainForm()
         {
@@ -27,11 +29,50 @@ namespace MapleAutoBooster
                 this.MapleConfig.ServiceData = new List<ServiceConfig>();
 
             InitializeComponent();
+
+            this.UpGradeGroup();
+            this.ReloadHotKeys();
+            this.LoadGroupData();
             this.ReloadServices();
+        }
+
+        /// <summary>
+        ///升级判断，加上默认分组
+        ///如果所有的分组都为null,并且分组个数也为null，则创建，并重置所有的分组
+        /// </summary>
+        private void UpGradeGroup()
+        {
+            if (this.MapleConfig.GroupData != null)
+            {
+                return;
+            }
+
+            if (this.MapleConfig.ServiceData != null && this.MapleConfig.ServiceData.Count(x => !string.IsNullOrEmpty(x.ServiceGroup)) > 0)
+            {
+                return;
+            }
+
+            var guidKey = Guid.NewGuid().ToString();
+            this.MapleConfig.GroupData = new List<CustomBindValue>();
+            this.MapleConfig.GroupData.Add(new CustomBindValue()
+            {
+                Key = guidKey,
+                Value = "默认"
+            });
+
+            this.MapleConfig.ServiceData.ForEach(x => x.ServiceGroup = guidKey);
+            this.MapleConfig.Save();
         }
 
         private void BtnAddService_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(CurrGroupKey))
+            {
+                MessageBox.Show("请先添加服务分组。", "发射！");
+                return;
+            }
+
+
             ServiceForm form = new ServiceForm(null, MapleConfig);
             form.ShowDialog();
 
@@ -58,7 +99,7 @@ namespace MapleAutoBooster
         private void ReloadServices()
         {
             this.ServiceList.DataSource = null;
-            this.ServiceList.DataSource = this.MapleConfig.ServiceData;
+            this.ServiceList.DataSource = this.MapleConfig.ServiceData.Where(x => x.ServiceGroup == CurrGroupKey)?.ToList();
             this.ServiceList.Update();
             this.ServiceList.Refresh();
         }
@@ -108,6 +149,7 @@ namespace MapleAutoBooster
                 this.BtnDelService.Enabled = lockCtl;
                 this.ServiceList.Enabled = lockCtl;
                 this.BtnRecordKey.Enabled = lockCtl;
+                this.MainMenu.Enabled = lockCtl;
             }));
         }
 
@@ -133,8 +175,56 @@ namespace MapleAutoBooster
                 this.LogBox.SelectionFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 this.LogBox.ScrollToCaret();
                 this.LogBox.SelectionStart = this.LogBox.Text.Length;
-                Util.LogTxt(logTxt, true);
+                //Util.LogTxt(logTxt, true);
             }));
+        }
+
+        private void LogStatus(string logTxt)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                this.runStatus.Text = logTxt;
+            }));
+        }
+
+        private void BtnSetting_Click(object sender, EventArgs e)
+        {
+            SettingForm form = new SettingForm(MapleConfig);
+            form.ShowDialog();
+            CurrGroupKey = string.Empty;
+            this.MapleConfig.Reload();
+            //刷新一下热键注册
+            this.ReloadHotKeys();
+            //刷新一下分组
+            this.LoadGroupData();
+        }
+
+        private void LoadGroupData()
+        {
+            if (this.MapleConfig.GroupData == null)
+            {
+                return;
+            }
+
+            this.ServiceGroupBox.ComboBox.DisplayMember = "Value";
+            this.ServiceGroupBox.ComboBox.ValueMember = "Key";
+            this.ServiceGroupBox.ComboBox.DataSource = this.MapleConfig.GroupData;
+        }
+
+        private void ServiceGroupBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectGroup = this.ServiceGroupBox.SelectedItem;
+            if (selectGroup != null)
+            {
+                var groupData = (CustomBindValue)selectGroup;
+                CurrGroupKey = groupData.Key;
+                this.ReloadServices();
+            }
+        }
+
+        private void BtnCopyService_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

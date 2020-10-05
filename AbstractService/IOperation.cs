@@ -16,7 +16,7 @@ namespace MapleAutoBooster.Abstract
 
         bool ValidateOperationMethod(MethodInfo method, string[] param);
 
-        void ExeuteOperationMethod(MethodInfo method, string[] param);
+        void ExeuteOperationMethod(AbstractBoosterService service, MethodInfo method, string[] param);
 
         string GetOperationMethodText(MethodInfo method, string[] param);
     }

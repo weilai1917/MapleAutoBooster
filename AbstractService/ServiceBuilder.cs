@@ -15,6 +15,7 @@ namespace MapleAutoBooster.Abstract
             service.Id = config.Guid;
             service.ServiceTypeId = config.ServiceTypeId;
             service.ServiceName = config.ServiceName;
+            service.ServiceGroup = config.ServiceGroup;
             service.ServicePolicy = config.ServicePolicy;
             service.ServiceDescription = config.ServiceDescription;
             service.Operations = new List<OperateObject>();
@@ -34,7 +35,7 @@ namespace MapleAutoBooster.Abstract
                     };
                     foreach (var opItem in item["Operations"] as JArray)
                     {
-                        var operation = new Operation(opItem["OperationString"].ToString());
+                        IOperation operation = new Operation(opItem["OperationString"].ToString());
                         operation.HandleOperationMethod(service, (m, p) =>
                          {
                              if (operation.ValidateOperationMethod(m, p))

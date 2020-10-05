@@ -35,17 +35,18 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.BtnUser = new System.Windows.Forms.ToolStripButton();
-            this.BtnConnect = new System.Windows.Forms.ToolStripButton();
-            this.BtnAddService = new System.Windows.Forms.ToolStripButton();
+            this.MainMenu = new System.Windows.Forms.ToolStrip();
+            this.BtnAddService = new System.Windows.Forms.ToolStripSplitButton();
+            this.BtnCopyService = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnDelService = new System.Windows.Forms.ToolStripButton();
             this.BtnSetting = new System.Windows.Forms.ToolStripButton();
             this.BtnRecordKey = new System.Windows.Forms.ToolStripButton();
+            this.ServiceGroupBox = new System.Windows.Forms.ToolStripComboBox();
             this.LogBox = new System.Windows.Forms.RichTextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ServiceList = new System.Windows.Forms.DataGridView();
             this.serviceDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.MainStatuStrip = new System.Windows.Forms.StatusStrip();
+            this.runStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.mapleConfigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.IsRun = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.guidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,55 +55,49 @@
             this.serviceDescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.servicePolicyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operationsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStrip1.SuspendLayout();
+            this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServiceList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.serviceDataBindingSource)).BeginInit();
+            this.MainStatuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapleConfigBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // MainMenu
             // 
-            this.toolStrip1.BackColor = System.Drawing.Color.AliceBlue;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BtnUser,
-            this.BtnConnect,
+            this.MainMenu.BackColor = System.Drawing.Color.AliceBlue;
+            this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BtnAddService,
             this.BtnDelService,
             this.BtnSetting,
-            this.BtnRecordKey});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(444, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // BtnUser
-            // 
-            this.BtnUser.Image = ((System.Drawing.Image)(resources.GetObject("BtnUser.Image")));
-            this.BtnUser.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnUser.Name = "BtnUser";
-            this.BtnUser.Size = new System.Drawing.Size(76, 22);
-            this.BtnUser.Text = "用户信息";
-            this.BtnUser.Visible = false;
-            // 
-            // BtnConnect
-            // 
-            this.BtnConnect.Image = ((System.Drawing.Image)(resources.GetObject("BtnConnect.Image")));
-            this.BtnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BtnConnect.Name = "BtnConnect";
-            this.BtnConnect.Size = new System.Drawing.Size(76, 22);
-            this.BtnConnect.Text = "关联登录";
-            this.BtnConnect.Visible = false;
+            this.BtnRecordKey,
+            this.ServiceGroupBox});
+            this.MainMenu.Location = new System.Drawing.Point(0, 0);
+            this.MainMenu.Name = "MainMenu";
+            this.MainMenu.Size = new System.Drawing.Size(444, 25);
+            this.MainMenu.TabIndex = 0;
+            this.MainMenu.Text = "toolStrip1";
             // 
             // BtnAddService
             // 
+            this.BtnAddService.AutoSize = false;
             this.BtnAddService.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.BtnAddService.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BtnCopyService});
             this.BtnAddService.Image = ((System.Drawing.Image)(resources.GetObject("BtnAddService.Image")));
             this.BtnAddService.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BtnAddService.Name = "BtnAddService";
-            this.BtnAddService.Size = new System.Drawing.Size(60, 22);
+            this.BtnAddService.Size = new System.Drawing.Size(72, 22);
             this.BtnAddService.Text = "添加服务";
-            this.BtnAddService.Click += new System.EventHandler(this.BtnAddService_Click);
+            this.BtnAddService.ButtonClick += new System.EventHandler(this.BtnAddService_Click);
+            // 
+            // BtnCopyService
+            // 
+            this.BtnCopyService.BackColor = System.Drawing.Color.White;
+            this.BtnCopyService.Name = "BtnCopyService";
+            this.BtnCopyService.ShowShortcutKeys = false;
+            this.BtnCopyService.Size = new System.Drawing.Size(116, 22);
+            this.BtnCopyService.Text = "复制服务";
+            this.BtnCopyService.Click += new System.EventHandler(this.BtnCopyService_Click);
             // 
             // BtnDelService
             // 
@@ -121,6 +116,7 @@
             this.BtnSetting.Name = "BtnSetting";
             this.BtnSetting.Size = new System.Drawing.Size(52, 22);
             this.BtnSetting.Text = "设置";
+            this.BtnSetting.Click += new System.EventHandler(this.BtnSetting_Click);
             // 
             // BtnRecordKey
             // 
@@ -129,30 +125,35 @@
             this.BtnRecordKey.Name = "BtnRecordKey";
             this.BtnRecordKey.Size = new System.Drawing.Size(76, 22);
             this.BtnRecordKey.Text = "录制键盘";
-            this.BtnRecordKey.Click += new System.EventHandler(this.BtnRecordKey_Click);
+            this.BtnRecordKey.Visible = false;
+            // 
+            // ServiceGroupBox
+            // 
+            this.ServiceGroupBox.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.ServiceGroupBox.BackColor = System.Drawing.Color.White;
+            this.ServiceGroupBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ServiceGroupBox.DropDownWidth = 75;
+            this.ServiceGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ServiceGroupBox.IntegralHeight = false;
+            this.ServiceGroupBox.Name = "ServiceGroupBox";
+            this.ServiceGroupBox.Size = new System.Drawing.Size(100, 25);
+            this.ServiceGroupBox.SelectedIndexChanged += new System.EventHandler(this.ServiceGroupBox_SelectedIndexChanged);
             // 
             // LogBox
             // 
             this.LogBox.BackColor = System.Drawing.Color.White;
             this.LogBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.LogBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.LogBox.Location = new System.Drawing.Point(0, 221);
+            this.LogBox.Location = new System.Drawing.Point(0, 432);
             this.LogBox.Name = "LogBox";
             this.LogBox.ReadOnly = true;
-            this.LogBox.Size = new System.Drawing.Size(444, 343);
+            this.LogBox.Size = new System.Drawing.Size(444, 132);
             this.LogBox.TabIndex = 2;
             this.LogBox.Text = "";
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 564);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(444, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
             // ServiceList
             // 
+            this.ServiceList.AllowUserToResizeRows = false;
             this.ServiceList.AutoGenerateColumns = false;
             this.ServiceList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ServiceList.BackgroundColor = System.Drawing.Color.White;
@@ -189,8 +190,8 @@
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.ServiceList.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.ServiceList.RowTemplate.Height = 23;
-            this.ServiceList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ServiceList.Size = new System.Drawing.Size(444, 196);
+            this.ServiceList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.ServiceList.Size = new System.Drawing.Size(444, 407);
             this.ServiceList.TabIndex = 4;
             this.ServiceList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ServiceList_CellContentClick);
             this.ServiceList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ServiceList_CellDoubleClick);
@@ -200,6 +201,24 @@
             // 
             this.serviceDataBindingSource.DataMember = "ServiceData";
             this.serviceDataBindingSource.DataSource = this.mapleConfigBindingSource;
+            // 
+            // MainStatuStrip
+            // 
+            this.MainStatuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.runStatus});
+            this.MainStatuStrip.Location = new System.Drawing.Point(0, 564);
+            this.MainStatuStrip.Name = "MainStatuStrip";
+            this.MainStatuStrip.Size = new System.Drawing.Size(444, 22);
+            this.MainStatuStrip.TabIndex = 3;
+            this.MainStatuStrip.Text = "statusStrip1";
+            // 
+            // runStatus
+            // 
+            this.runStatus.BackColor = System.Drawing.SystemColors.Control;
+            this.runStatus.Name = "runStatus";
+            this.runStatus.Size = new System.Drawing.Size(429, 17);
+            this.runStatus.Spring = true;
+            this.runStatus.Text = "当前没有正在运行的服务。";
             // 
             // mapleConfigBindingSource
             // 
@@ -222,8 +241,7 @@
             this.guidDataGridViewTextBoxColumn.HeaderText = "Id";
             this.guidDataGridViewTextBoxColumn.Name = "guidDataGridViewTextBoxColumn";
             this.guidDataGridViewTextBoxColumn.ReadOnly = true;
-            this.guidDataGridViewTextBoxColumn.Visible = false;
-            this.guidDataGridViewTextBoxColumn.Width = 80;
+            this.guidDataGridViewTextBoxColumn.Width = 50;
             // 
             // serviceTypeIdDataGridViewTextBoxColumn
             // 
@@ -285,8 +303,8 @@
             this.ClientSize = new System.Drawing.Size(444, 586);
             this.Controls.Add(this.ServiceList);
             this.Controls.Add(this.LogBox);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.MainStatuStrip);
+            this.Controls.Add(this.MainMenu);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -295,10 +313,12 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "冒险发射器";
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.MainMenu.ResumeLayout(false);
+            this.MainMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServiceList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.serviceDataBindingSource)).EndInit();
+            this.MainStatuStrip.ResumeLayout(false);
+            this.MainStatuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapleConfigBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -307,18 +327,19 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton BtnConnect;
+        private System.Windows.Forms.ToolStrip MainMenu;
         private System.Windows.Forms.ToolStripButton BtnSetting;
-        private System.Windows.Forms.ToolStripButton BtnUser;
         private System.Windows.Forms.RichTextBox LogBox;
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.DataGridView ServiceList;
-        private System.Windows.Forms.ToolStripButton BtnAddService;
         private System.Windows.Forms.ToolStripButton BtnDelService;
         private System.Windows.Forms.BindingSource serviceDataBindingSource;
         private System.Windows.Forms.BindingSource mapleConfigBindingSource;
+        private System.Windows.Forms.ToolStripSplitButton BtnAddService;
+        private System.Windows.Forms.ToolStripMenuItem BtnCopyService;
+        private System.Windows.Forms.ToolStripComboBox ServiceGroupBox;
+        private System.Windows.Forms.StatusStrip MainStatuStrip;
         private System.Windows.Forms.ToolStripButton BtnRecordKey;
+        private System.Windows.Forms.ToolStripStatusLabel runStatus;
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsRun;
         private System.Windows.Forms.DataGridViewTextBoxColumn guidDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn serviceTypeIdDataGridViewTextBoxColumn;

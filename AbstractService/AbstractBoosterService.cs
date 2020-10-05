@@ -22,6 +22,8 @@ namespace MapleAutoBooster.Abstract
 
         private string _ServiceName;
 
+        private string _ServiceGroup;
+
         private string _ServiceDescription;
 
         private ServicePolicyEnum _ServicePolicy;
@@ -29,6 +31,7 @@ namespace MapleAutoBooster.Abstract
         public string Id { get => _guid; set => _guid = value; }
         public string ServiceTypeId { get => _serviceTypeId; set => _serviceTypeId = value; }
         public string ServiceName { get => _ServiceName; set => _ServiceName = value; }
+        public string ServiceGroup { get => _ServiceGroup; set => _ServiceGroup = value; }
         public string ServiceDescription { get => _ServiceDescription; set => _ServiceDescription = value; }
         public ServicePolicyEnum ServicePolicy { get => _ServicePolicy; set => _ServicePolicy = value; }
 
@@ -37,6 +40,7 @@ namespace MapleAutoBooster.Abstract
         public ICollection<OperateObject> Operations;
 
         public ICollection<string> AnotherOperations;
+
         public AbstractBoosterService()
         {
             this.Operations = new List<OperateObject>();
@@ -72,7 +76,7 @@ namespace MapleAutoBooster.Abstract
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         [ServiceMethod]
-        [Description("运行其他服务,id:{0}")]
+        [Description("运行其他服务[id]")]
         public void RunService(string serviceId)
         {
             if (this.AnotherOperations == null)
@@ -82,16 +86,11 @@ namespace MapleAutoBooster.Abstract
             this.AnotherOperations.Add(serviceId);
         }
 
+        [ServiceMethod]
+        [Description("休眠当前服务[100]ms")]
         public void Sleep(string sleepTime)
         {
             Thread.Sleep(Convert.ToInt32(sleepTime));
-        }
-
-        public void LockProgram(string program)
-        {
-            //锁定某个程序进行执行
-
-
         }
     }
 

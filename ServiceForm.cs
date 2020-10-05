@@ -39,17 +39,26 @@ namespace MapleAutoBooster
             try
             {
                 this.BoosterService.SaveValidation();
-                var serviceConfig = new ServiceConfig()
+                var serviceConfig = new ServiceConfig();
+                if (!string.IsNullOrEmpty(this.BoosterService.Id))
                 {
-                    Guid = this.BoosterService.Id ?? Guid.NewGuid().ToString(),
-                    ServiceTypeId = this.BoosterService.ServiceTypeId,
-                    ServicePolicy = this.BoosterService.ServicePolicy,
-                    ServiceName = this.BoosterService.ServiceName,
-                    ServiceDescription = this.BoosterService.ServiceDescription,
-                    Operations = JsonConvert.SerializeObject(this.BoosterService.Operations.ToList())
-                };
-                this.MapleConfig.ServiceData.RemoveAll(x => x.Guid == serviceConfig.Guid);
-                this.MapleConfig.ServiceData.Add(serviceConfig);
+                    serviceConfig = this.MapleConfig.ServiceData.First(x => x.Guid == this.BoosterService.Id);
+                }
+                else
+                {
+                    serviceConfig.Guid = Guid.NewGuid().ToString();
+                }
+
+                serviceConfig.ServiceTypeId = this.BoosterService.ServiceTypeId;
+                serviceConfig.ServicePolicy = this.BoosterService.ServicePolicy;
+                serviceConfig.ServiceName = this.BoosterService.ServiceName;
+                serviceConfig.ServiceGroup = this.BoosterService.ServiceGroup;
+                serviceConfig.ServiceDescription = this.BoosterService.ServiceDescription;
+                serviceConfig.Operations = JsonConvert.SerializeObject(this.BoosterService.Operations.ToList());
+
+                if (string.IsNullOrEmpty(this.BoosterService.Id))
+                    this.MapleConfig.ServiceData.Add(serviceConfig);
+
                 //序列化成ServiceObject保存起来
                 this.MapleConfig.Save();
                 this.Close();
@@ -85,15 +94,21 @@ namespace MapleAutoBooster
 
             //执行策略
             ServicePolicyList = new List<CustomBindValue>();
-            ServicePolicyList.Add(new CustomBindValue { Key = ServicePolicyEnum.Loop.ToString(), Value = "循环执行" });
             ServicePolicyList.Add(new CustomBindValue { Key = ServicePolicyEnum.Once.ToString(), Value = "执行一次" });
+            ServicePolicyList.Add(new CustomBindValue { Key = ServicePolicyEnum.Loop.ToString(), Value = "循环执行" });
             ServicePolicy.ValueMember = "Key";
             ServicePolicy.DisplayMember = "Value";
             ServicePolicy.DataSource = this.ServicePolicyList;
+
+            //服务分组
+            this.ServiceGroup.DisplayMember = "Value";
+            this.ServiceGroup.ValueMember = "Key";
+            this.ServiceGroup.DataSource = this.MapleConfig.GroupData;
         }
 
         private void BindDefaultSelectValue()
         {
+            BoosterService.ServiceGroup = this.MapleConfig.GroupData.First().Key;
             BoosterService.ServiceTypeId = this.ServiceTypeList.First().Key;
             BoosterService.ServiceName = this.ServiceTypeList.First().Value;
         }
@@ -103,6 +118,7 @@ namespace MapleAutoBooster
             this.ServiceDescription.Text = this.BoosterService.ServiceDescription;
             this.ServicePolicy.SelectedItem = this.ServicePolicyList.First(x => x.Key == this.BoosterService.ServicePolicy.ToString());
             this.ServiceType.SelectedItem = this.ServiceTypeList.First(x => x.Key == this.BoosterService.ServiceTypeId);
+            this.ServiceGroup.SelectedItem = this.MapleConfig.GroupData.First(x => x.Key == this.BoosterService.ServiceGroup);
             foreach (var serviceObject in this.BoosterService.Operations.GroupBy(x => x.OperateTarget))
             {
                 var serviceControl = this.Controls.Find($"ServiceDo{serviceObject.Key}", true).First();
@@ -132,6 +148,7 @@ namespace MapleAutoBooster
             BoosterService.ServiceTypeId = Convert.ToString(this.ServiceType.SelectedValue);
             BoosterService.ServiceName = Convert.ToString(this.ServiceType.Text);
             BoosterService.ServicePolicy = (ServicePolicyEnum)Enum.Parse(typeof(ServicePolicyEnum), this.ServicePolicy.SelectedValue.ToString());
+            BoosterService.ServiceGroup = Convert.ToString(this.ServiceGroup.SelectedValue);
             this.BindSelectVale();
         }
 
@@ -162,18 +179,17 @@ namespace MapleAutoBooster
             {
                 var operation = new Operation(item);
                 ServiceDoOperations.Operations.Add(operation);
-                //this.BoosterService.HandleOperationMethod(operation.OperationString, (m, p) =>
-                //{
-                //    sb.AppendLine(this.BoosterService.GetOperationMethodText(m, p));
-                //});
             }
-            //var serviceDescription = this.Controls.Find($"ServiceDescription{ServiceTarget}", true).First();
-            //serviceDescription.Text = sb.ToString();
         }
 
         private void ServiceDescription_TextChanged(object sender, EventArgs e)
         {
             this.BoosterService.ServiceDescription = this.ServiceDescription.Text;
+        }
+
+        private void ServiceGroup_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            this.BoosterService.ServiceGroup = Convert.ToString(this.ServiceGroup.SelectedValue);
         }
     }
 }
