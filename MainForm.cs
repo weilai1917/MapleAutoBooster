@@ -28,8 +28,9 @@ namespace MapleAutoBooster
             if (this.MapleConfig.ServiceData == null)
                 this.MapleConfig.ServiceData = new List<ServiceConfig>();
 
-            InitializeComponent();
+            timer_Record.Tick += Timer_Record_Tick;
 
+            InitializeComponent();
             this.UpGradeGroup();
             this.ReloadHotKeys();
             this.LoadGroupData();
@@ -161,7 +162,13 @@ namespace MapleAutoBooster
             }
         }
 
-        private void LogTxt(string logTxt)
+        public enum EnumColor
+        {
+            Red,
+            Black,
+            Blue
+        }
+        private void LogTxt(string logTxt, EnumColor color = EnumColor.Black)
         {
             this.LogBox.BeginInvoke(new Action(() =>
             {
@@ -172,6 +179,18 @@ namespace MapleAutoBooster
                 string logAppend = DateTime.Now.ToString("[HH:mm:ss]: ") + logTxt + "\r\n";
                 this.LogBox.AppendText(logAppend);
                 this.LogBox.Select((this.LogBox.Text.Length - logAppend.Length) + 1, logAppend.Length - 1);
+                switch (color)
+                {
+                    case EnumColor.Black:
+                        this.LogBox.SelectionColor = System.Drawing.SystemColors.Desktop;
+                        break;
+                    case EnumColor.Red:
+                        this.LogBox.SelectionColor = Color.DarkRed;
+                        break;
+                    case EnumColor.Blue:
+                        this.LogBox.SelectionColor = System.Drawing.SystemColors.HotTrack;
+                        break;
+                }
                 this.LogBox.SelectionFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 this.LogBox.ScrollToCaret();
                 this.LogBox.SelectionStart = this.LogBox.Text.Length;

@@ -19,6 +19,7 @@ namespace MapleAutoBooster.ToolBox
         /// </summary>
         public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct lParam);
         private static keyboardHookProc staticProc;
+        private Keys hotKey;
         public struct keyboardHookStruct
         {
             public int vkCode;
@@ -61,8 +62,9 @@ namespace MapleAutoBooster.ToolBox
         /// <summary>
         /// Initializes a new instance of the <see cref="globalKeyboardHook"/> class and installs the keyboard hook.
         /// </summary>
-        public GlobalKeyboardHook()
+        public GlobalKeyboardHook(Keys key)
         {
+            hotKey = key;
             hook();
         }
 
@@ -85,6 +87,7 @@ namespace MapleAutoBooster.ToolBox
             IntPtr hInstance = LoadLibrary("User32");
             staticProc = new keyboardHookProc(hookProc);
             hhook = SetWindowsHookEx(WH_KEYBOARD_LL, staticProc, hInstance, 0);
+            //GCHandle.Alloc(hhook);
         }
 
         /// <summary>
@@ -107,6 +110,11 @@ namespace MapleAutoBooster.ToolBox
             if (code >= 0)
             {
                 Keys key = (Keys)lParam.vkCode;
+                //当为热键的时候，不进行录制，避免系统回调导致的未将对象初始化
+                if (key == hotKey)
+                {
+                    return 0;
+                }
                 //if (HookedKeys.Contains(key))
                 //{
                 KeyEventArgs kea = new KeyEventArgs(key);
@@ -122,8 +130,8 @@ namespace MapleAutoBooster.ToolBox
                     return 1;
                 //}
             }
-            return CallNextHookEx(hhook, code, wParam, ref lParam);
-
+            var rtnCall = CallNextHookEx(hhook, code, wParam, ref lParam);
+            return rtnCall;
         }
         #endregion
 

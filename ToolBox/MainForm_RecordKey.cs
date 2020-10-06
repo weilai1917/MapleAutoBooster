@@ -20,7 +20,6 @@ namespace MapleAutoBooster
         private Dictionary<int, string> HotKeyPairs = new Dictionary<int, string>();
         private Dictionary<int, MethodInfo> HotKeyAction = new Dictionary<int, MethodInfo>();
         private Stopwatch RecordStopWatch = new Stopwatch();
-        private Stopwatch RecordStartWait = new Stopwatch();
 
         #region API
 
@@ -127,6 +126,7 @@ namespace MapleAutoBooster
             {
                 this.Text = "(๑•ᴗ•๑)启动中";
                 this.Start = true;
+                this.Stop = false;
                 this.MapleConfig.Save();
                 this.StartAllService();
             }
@@ -134,6 +134,7 @@ namespace MapleAutoBooster
             {
                 this.Text = "冒险发射器";
                 this.Start = false;
+                this.Stop = false;
                 this.LockAllControl(true);
             }
         }
@@ -153,63 +154,34 @@ namespace MapleAutoBooster
             }
             if (this.BtnRecordKey.Tag == null)
             {
-                if (RecordStartWait.Elapsed.TotalSeconds < 5)
-                {
-                    MessageBox.Show("消停一会吧，太快了，5秒后再试");
-                    return;
-                }
-
-                HookKey = new GlobalKeyboardHook();
+                HookKey = new GlobalKeyboardHook((Keys)Enum.Parse(typeof(Keys), this.MapleConfig.HotKeyKeyRecord));
                 HookKey.KeyDown += RecordKeyDownAction;
                 HookKey.KeyUp += RecordKeyUpAction;
+
                 RecordList = new List<RecordKeyData>();
                 RecordStopWatch.Start();
+
                 this.BtnRecordKey.Tag = true;
-                this.BtnRecordKey.Text = "停止录制";
                 this.LogTxt("开始录制键盘。");
                 this.LogStatus("开始录制键盘。");
                 this.LockAllControl(false);
-                RecordStartWait.Restart();
+
+                timer_Record.Start();
             }
             else
             {
-                RecordStartWait.Stop();
-                #region 把RecordList专程一条记录，进行build
-                ServiceConfig config = new ServiceConfig();
-                config.Guid = Guid.NewGuid().ToString();
-                config.ServiceTypeId = "MapleAutoBooster.Service.AutoKeyService";
-                config.ServiceName = "自动按键";
-                config.ServicePolicy = Abstract.ServicePolicyEnum.Once;
-                config.ServiceGroup = CurrGroupKey;
-                config.ServiceDescription = $"总时长：{RecordList.Sum(x => x.Wait) / 1000}s，动作数：{RecordList.Count}";
-                var opObject1 = new OperateObject();
-                opObject1.OperateId = Guid.NewGuid().ToString();
-                opObject1.OperateTarget = "1";
-                opObject1.Operations = new List<IOperation>();
-                RecordList.RemoveAt(RecordList.Count - 1);
-                foreach (var item in RecordList)
-                {
-                    opObject1.Operations.Add(new Operation($"PressKey[{item.Key},{item.Action},{item.Wait}]"));
-                }
-                var opObject0 = new OperateObject();
-                opObject0.OperateId = Guid.NewGuid().ToString();
-                opObject0.OperateTarget = "0";
-                opObject0.Operations = new List<IOperation>();
-                opObject0.Operations.Add(new Operation($"LockMapleWindow[]"));
-                config.Operations = JsonConvert.SerializeObject(new List<OperateObject>() { opObject0, opObject1 });
-                this.MapleConfig.ServiceData.Add(config);
+                this.timer_Record.Stop();
+
+                this.MapleConfig.ServiceData.Add(ServiceBuilder.BuildKeyRecord(CurrGroupKey, RecordList));
                 this.MapleConfig.Save();
-                #endregion
 
                 this.MapleConfig.Reload();
                 this.ReloadServices();
 
-                this.BtnRecordKey.Text = "录制键盘";
                 this.BtnRecordKey.Tag = null;
                 this.LogTxt("录制键盘已经停止。");
                 this.LogStatus("录制键盘已经停止。");
                 this.LockAllControl(true);
-
 
                 HookKey.KeyDown -= RecordKeyDownAction;
                 HookKey.KeyUp -= RecordKeyUpAction;
@@ -217,6 +189,13 @@ namespace MapleAutoBooster
                 GC.Collect();
             }
         }
+
+        private void Timer_Record_Tick(object sender, EventArgs e)
+        {
+            this.LogStatus($"当前已录制：{this.timer_Record.Interval / 1000}秒");
+        }
+
+        private Timer timer_Record = new Timer();
 
         public void HotKeyServiceStop()
         {

@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MapleAutoBooster.Abstract
 {
@@ -46,6 +48,32 @@ namespace MapleAutoBooster.Abstract
                 }
             }
             return service;
+        }
+
+        public static ServiceConfig BuildKeyRecord(string groupKey, List<RecordKeyData> RecordList)
+        {
+            ServiceConfig config = new ServiceConfig();
+            config.Guid = Guid.NewGuid().ToString();
+            config.ServiceTypeId = "MapleAutoBooster.Service.AutoKeyService";
+            config.ServiceName = "自动按键";
+            config.ServicePolicy = Abstract.ServicePolicyEnum.Once;
+            config.ServiceGroup = groupKey;// CurrGroupKey;
+            config.ServiceDescription = $"总时长：{RecordList.Sum(x => x.Wait) / 1000}s，动作数：{RecordList.Count}";
+            var opObject1 = new OperateObject();
+            opObject1.OperateId = Guid.NewGuid().ToString();
+            opObject1.OperateTarget = "1";
+            opObject1.Operations = new List<IOperation>();
+            foreach (var item in RecordList)
+            {
+                opObject1.Operations.Add(new Operation($"PressKey[{item.Key},{item.Action},{item.Wait}]"));
+            }
+            var opObject0 = new OperateObject();
+            opObject0.OperateId = Guid.NewGuid().ToString();
+            opObject0.OperateTarget = "0";
+            opObject0.Operations = new List<IOperation>();
+            opObject0.Operations.Add(new Operation($"LockMapleWindow[]"));
+            config.Operations = JsonConvert.SerializeObject(new List<OperateObject>() { opObject0, opObject1 });
+            return config;
         }
     }
 }
