@@ -172,6 +172,12 @@ namespace MapleAutoBooster.Service
             MapleWindow = FindWindow("MapleStoryClass", "MapleStory");
         }
 
+        [ServiceMethod]
+        public void LockWindow(string windowName)
+        {
+            MapleWindow = FindWindow(null, windowName);
+        }
+
         private int GetKeyAction(string action)
         {
             int actionValue = WM_KEYDOWN;
