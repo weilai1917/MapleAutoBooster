@@ -110,6 +110,9 @@
     <Compile Include="AfterService\InvokeServiceControl.Designer.cs">
       <DependentUpon>InvokeServiceControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomOperations\FindWindow.cs" />
+    <Compile Include="Operations\AbstractOperation.cs" />
+    <Compile Include="Operations\IOperation.cs" />
     <Compile Include="ServiceAttribute\ServiceMethodAttribute.cs" />
     <Compile Include="CustomBindValue.cs" />
     <Compile Include="MainForm.cs">
@@ -131,6 +134,8 @@
     <Compile Include="CustomerService\AutoKeyService.cs" />
     <Compile Include="CustomerService\ColorFinderService.cs" />
     <Compile Include="CustomerService\WzChangeService.cs" />
+    <Compile Include="Services\AbstractDynamicService.cs" />
+    <Compile Include="Services\AbstractService.cs" />
     <Compile Include="SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>

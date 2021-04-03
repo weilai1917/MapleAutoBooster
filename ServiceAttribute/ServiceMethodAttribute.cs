@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MapleAutoBooster.ServiceAttribute
-{
+{    
     [AttributeUsage(AttributeTargets.Method)]
     public class ServiceMethodAttribute : Attribute
     {
