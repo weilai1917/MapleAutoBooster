@@ -18,7 +18,10 @@ namespace MapleAutoBooster.CustomOperations
     public class PressActionKeyOp : AbstractOperation
     {
         private const string tarKey = "tarWindow";
-        public override string OperationKey { set => value = "CC5049BA-7607-44EE-987A-21BD79EC7C01"; }
+        public override string OperationKey
+        {
+            get { return "CC5049BA-7607-44EE-987A-21BD79EC7C01"; }
+        }
 
         public PressActionKeyOp()
         {
@@ -52,8 +55,8 @@ namespace MapleAutoBooster.CustomOperations
             }
             else
             {
-                var tDic = ThreadOptions.Value;
-                tarWindow = tDic.ContainsKey(tarKey) ? (IntPtr)tDic[tarKey] : IntPtr.Zero;
+                var threadOption = ThreadOptions.Value;
+                tarWindow = (threadOption != null && tarKey.Equals(threadOption.Item1)) ? (IntPtr)threadOption.Item2 : IntPtr.Zero;
             }
 
             Keys key = (Keys)Enum.Parse(typeof(Keys), pressKey);

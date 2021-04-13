@@ -15,7 +15,7 @@ namespace MapleAutoBooster.CustomOperations
     /// </summary>
     public class FindWindowOp : AbstractOperation
     {
-        public override string OperationKey { set => value = "B8D93388-5C97-44C1-8798-F77FC1A4E5C3"; }
+        public override string OperationKey { get { return "B8D93388-5C97-44C1-8798-F77FC1A4E5C3"; } }
 
         public FindWindowOp()
         {

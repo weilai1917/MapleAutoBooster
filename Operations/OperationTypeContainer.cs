@@ -10,7 +10,8 @@ namespace MapleAutoBooster.Operations
 {
     public class OperationTypeContainer
     {
-        public static ConcurrentDictionary<object, object> instance = new ConcurrentDictionary<object, object>();
+        public static ConcurrentDictionary<string, object> _OperationName = new ConcurrentDictionary<string, object>();
+        static ConcurrentDictionary<object, object> instance = new ConcurrentDictionary<object, object>();
 
         public static List<Type> ScanOperationTypes()
         {
@@ -22,8 +23,14 @@ namespace MapleAutoBooster.Operations
             };
         }
 
-        public static IOperation RegisteOperationType(IOperation op)
+        public static IOperation RegisterOperationType(Type op)
         {
+            return (IOperation)instance.GetOrAdd(op.GetType(), ((IOperation)Activator.CreateInstance(op)).CreateInstance());
+        }
+
+        public static IOperation RegisterOperationType(IOperation op)
+        {
+            _OperationName.GetOrAdd(op.OperationKey, op.GetType());
             return (IOperation)instance.GetOrAdd(op.GetType(), op.CreateInstance());
         }
 

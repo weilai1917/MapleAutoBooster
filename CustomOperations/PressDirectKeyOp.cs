@@ -14,7 +14,7 @@ namespace MapleAutoBooster.CustomOperations
 {
     public class PressDirectKeyOp : AbstractOperation
     {
-        public override string OperationKey { set => value = "4687A577-1988-44DB-9D15-8C99DBE19DEA1"; }
+        public override string OperationKey { get { return "4687A577-1988-44DB-9D15-8C99DBE19DEA1"; } }
 
         public PressDirectKeyOp()
         {
@@ -41,7 +41,7 @@ namespace MapleAutoBooster.CustomOperations
             int pressAction = Convert.ToInt32(param["pressAction"]);
             int pressWait = Convert.ToInt32(param["pressWait"]);
 
-            Keys key = (Keys)Enum.Parse(typeof(Keys), pressKey); 
+            Keys key = (Keys)Enum.Parse(typeof(Keys), pressKey);
             keybd_event((byte)key, (byte)(Keys)MapVirtualKey((uint)key, 0), pressAction, 0);
 
             Thread.Sleep(pressWait);

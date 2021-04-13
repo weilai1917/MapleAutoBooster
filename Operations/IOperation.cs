@@ -8,6 +8,7 @@ namespace MapleAutoBooster.Operations
 {
     public interface IOperation
     {
+        string OperationKey { get; }
         /// <summary>
         /// 创建新示例
         /// </summary>

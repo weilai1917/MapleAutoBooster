@@ -13,3 +13,6 @@ E:\MapleAutoBooster\obj\x86\Debug\MapleAutoBooster.pdb
 E:\MapleAutoBooster\obj\x86\Debug\MapleAutoBooster.SettingForm.resources
 E:\MapleAutoBooster\obj\x86\Debug\MapleAutoBooster.AfterService.AlertMusicControl.resources
 E:\MapleAutoBooster\obj\x86\Debug\MapleAutoBooster.AfterService.InvokeServiceControl.resources
+D:\github\MapleAutoBooster\obj\x86\Debug\Milai.MapleAutoBooster.csprojAssemblyReference.cache
+D:\github\MapleAutoBooster\obj\x86\Debug\MapleAutoBooster.exe
+D:\github\MapleAutoBooster\obj\x86\Debug\MapleAutoBooster.pdb

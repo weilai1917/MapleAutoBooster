@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace MapleAutoBooster.Operations
 {
+    /// <summary>
+    /// 操作的定义是执行某一项具体任务
+    /// 
+    /// </summary>
     public abstract class AbstractOperation : IOperation
     {
-        public static ThreadLocal<Dictionary<string, object>> ThreadOptions;
-        public abstract string OperationKey { set; }
+        public static ThreadLocal<Tuple<string, object>> ThreadOptions;
+        public abstract string OperationKey { get; }
 
         protected string operationId;
         protected string operationName;
