@@ -128,7 +128,7 @@ namespace MapleAutoBooster
                 this.Start = true;
                 this.Stop = false;
                 this.MapleConfig.Save();
-                this.StartAllService();
+                //this.StartAllService();
             }
             else
             {

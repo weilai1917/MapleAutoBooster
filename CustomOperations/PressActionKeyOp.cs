@@ -56,7 +56,7 @@ namespace MapleAutoBooster.CustomOperations
             else
             {
                 var threadOption = ThreadOptions.Value;
-                tarWindow = (threadOption != null && tarKey.Equals(threadOption.Item1)) ? (IntPtr)threadOption.Item2 : IntPtr.Zero;
+                tarWindow = (threadOption != null && threadOption.ContainsKey(tarKey)) ? (IntPtr)threadOption[tarKey] : IntPtr.Zero;
             }
 
             Keys key = (Keys)Enum.Parse(typeof(Keys), pressKey);

@@ -92,22 +92,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractService\AbstractOperation.cs" />
-    <Compile Include="AbstractService\AbstractBoosterService.cs" />
-    <Compile Include="AbstractService\IOperation.cs" />
-    <Compile Include="AbstractService\OperateObject.cs" />
-    <Compile Include="AbstractService\Operation.cs" />
-    <Compile Include="AbstractService\ServiceBuilder.cs" />
     <Compile Include="CustomOperations\AlertMusicOp.cs" />
     <Compile Include="CustomOperations\FindColorOp.cs" />
     <Compile Include="CustomOperations\FindImageOp.cs" />
     <Compile Include="CustomOperations\FindWindowOp.cs" />
     <Compile Include="CustomOperations\PressActionKeyOp.cs" />
     <Compile Include="CustomOperations\PressDirectKeyOp.cs" />
+    <Compile Include="CustomOperations\PressMouseOp.cs" />
+    <Compile Include="Forms\ServiceDesignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ServiceDesignForm.Designer.cs">
+      <DependentUpon>ServiceDesignForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OldDesign\AbstractService\AbstractBoosterService.cs" />
+    <Compile Include="OldDesign\AbstractService\AbstractOperation.cs" />
+    <Compile Include="OldDesign\AbstractService\IOperation.cs" />
+    <Compile Include="OldDesign\AbstractService\OperateObject.cs" />
+    <Compile Include="OldDesign\AbstractService\Operation.cs" />
+    <Compile Include="OldDesign\AbstractService\ServiceBuilder.cs" />
+    <Compile Include="OldDesign\CustomerService\AutoKeyService.cs" />
+    <Compile Include="OldDesign\CustomerService\ColorFinderService.cs" />
+    <Compile Include="OldDesign\CustomerService\WzChangeService.cs" />
+    <Compile Include="OldDesign\ServiceAttribute\ServiceMethodAttribute.cs" />
+    <Compile Include="OldDesign\ServiceAttribute\ServiceTypeAttribute.cs" />
+    <Compile Include="OldDesign\ToolBox\GlobalKeyboardHook.cs" />
+    <Compile Include="OldDesign\ToolBox\MainForm_RecordKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OldDesign\ToolBox\MainForm_Service.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Operations\AbstractOperation.cs" />
     <Compile Include="Operations\IOperation.cs" />
     <Compile Include="Operations\OperationTypeContainer.cs" />
-    <Compile Include="ServiceAttribute\ServiceMethodAttribute.cs" />
     <Compile Include="CustomBindValue.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -118,33 +136,31 @@
     <Compile Include="MapleConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceAttribute\ServiceTypeAttribute.cs" />
-    <Compile Include="ServiceForm.cs">
+    <Compile Include="OldDesign\ServiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServiceForm.Designer.cs">
+    <Compile Include="OldDesign\ServiceForm.Designer.cs">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomerService\AutoKeyService.cs" />
-    <Compile Include="CustomerService\ColorFinderService.cs" />
-    <Compile Include="CustomerService\WzChangeService.cs" />
+    <Compile Include="Services\AbstractDynamicService.cs" />
     <Compile Include="Services\AbstractService.cs" />
-    <Compile Include="SettingForm.cs">
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\SubjectService.cs" />
+    <Compile Include="OldDesign\SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingForm.Designer.cs">
+    <Compile Include="OldDesign\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ToolBox\GlobalKeyboardHook.cs" />
-    <Compile Include="ToolBox\MainForm_RecordKey.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ToolBox\MainForm_Service.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Util.cs" />
+    <EmbeddedResource Include="Forms\ServiceDesignForm.resx">
+      <DependentUpon>ServiceDesignForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OldDesign\ToolBox\MainForm_Service.resx">
+      <DependentUpon>MainForm_Service.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -156,17 +172,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ServiceForm.resx">
+    <EmbeddedResource Include="OldDesign\ServiceForm.resx">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingForm.resx">
+    <EmbeddedResource Include="OldDesign\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ToolBox\MainForm_Service.resx">
-      <DependentUpon>MainForm_Service.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\MapleConfig.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -190,11 +202,7 @@
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 和 x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

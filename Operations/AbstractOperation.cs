@@ -13,7 +13,7 @@ namespace MapleAutoBooster.Operations
     /// </summary>
     public abstract class AbstractOperation : IOperation
     {
-        public static ThreadLocal<Tuple<string, object>> ThreadOptions;
+        public static ThreadLocal<Dictionary<string, object>> ThreadOptions;
         public abstract string OperationKey { get; }
 
         protected string operationId;

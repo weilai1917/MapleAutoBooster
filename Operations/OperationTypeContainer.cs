@@ -25,7 +25,7 @@ namespace MapleAutoBooster.Operations
 
         public static IOperation RegisterOperationType(Type op)
         {
-            return (IOperation)instance.GetOrAdd(op.GetType(), ((IOperation)Activator.CreateInstance(op)).CreateInstance());
+            return (IOperation)instance.GetOrAdd(op.GetType(), ((IOperation)op).CreateInstance());
         }
 
         public static IOperation RegisterOperationType(IOperation op)
